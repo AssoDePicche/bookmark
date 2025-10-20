@@ -1,0 +1,39 @@
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env.production
+    networks:
+      - application
+    ports:
+      - "8080:8080"
+  database:
+    command: --require_secure_transport=OFF
+    container_name: database
+    env_file:
+      - .env.production
+    healthcheck:
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      timeout: 5s
+    image: mysql:latest
+    networks:
+      - application
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+      - ./persistence:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+networks:
+  application:
+    driver: bridge
+volumes:
+  persistence:
+    driver: local
