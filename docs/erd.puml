@@ -1,0 +1,90 @@
+@startuml
+title Bookmark - Entity Relationship Diagram (ERD)
+
+entity "User" as user {
+  * id : PK
+  --
+  username : string
+  email : string
+  password : string
+  is_admin : boolean
+}
+
+entity "Book" as book {
+  * id : PK
+  --
+  title : string
+  description : text
+  genre : string
+  type : string <<enum>>  // BOOK or COMIC
+  cover_image_url : string
+  published_date : date
+  publisher_id : FK
+  series_id : FK
+}
+
+entity "Publisher" as publisher {
+  * id : PK
+  --
+  name : string
+}
+
+entity "ComicSeries" as series {
+  * id : PK
+  --
+  title : string
+  description : text
+}
+
+entity "Contributor" as contributor {
+  * id : PK
+  --
+  name : string
+}
+
+entity "BookContributor" as book_contributor {
+  * id : PK
+  --
+  book_id : FK
+  contributor_id : FK
+  role : string <<enum>>  // WRITER, INKER, etc.
+}
+
+entity "Rating" as rating {
+  * id : PK
+  --
+  user_id : FK
+  book_id : FK
+  score : int
+  review : text
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity "UserList" as user_list {
+  * id : PK
+  --
+  user_id : FK
+  name : string
+  is_public : boolean
+}
+
+entity "UserListItem" as user_list_item {
+  * id : PK
+  --
+  user_list_id : FK
+  book_id : FK
+  added_at : datetime
+}
+
+user ||--o{ rating : writes >
+book ||--o{ rating : receives >
+user ||--o{ user_list : owns >
+user_list ||--o{ user_list_item : contains >
+book ||--o{ user_list_item : appears in >
+book ||--o{ book_contributor : has >
+contributor ||--o{ book_contributor : contributes >
+book }o--|| publisher : published by >
+book }o--|| series : part of >
+
+@enduml

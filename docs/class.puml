@@ -1,0 +1,110 @@
+@startuml
+title Bookmark - Class Diagram
+
+class User {
+  +Long id
+  +String username
+  +String email
+  +String password
+  +boolean isAdmin
+  --
+  +List<Rating> ratings
+  +List<UserList> lists
+}
+
+class Book {
+  +Long id
+  +String title
+  +String description
+  +String genre
+  +String type  // BOOK or COMIC
+  +String coverImageUrl
+  +LocalDate publishedDate
+  --
+  +Publisher publisher
+  +ComicSeries series
+  +List<BookContributor> contributors
+  +List<Rating> ratings
+}
+
+class Publisher {
+  +Long id
+  +String name
+  --
+  +List<Book> books
+}
+
+class ComicSeries {
+  +Long id
+  +String title
+  +String description
+  --
+  +List<Book> books
+}
+
+class Contributor {
+  +Long id
+  +String name
+  --
+  +List<BookContributor> bookContributions
+}
+
+class BookContributor {
+  +Long id
+  +Role role
+  --
+  +Book book
+  +Contributor contributor
+}
+
+enum Role {
+  WRITER
+  PENCILER
+  INKER
+  COLORIST
+  LETTERER
+  EDITOR
+}
+
+class Rating {
+  +Long id
+  +int score
+  +String review
+  +LocalDateTime createdAt
+  +LocalDateTime updatedAt
+  --
+  +User user
+  +Book book
+}
+
+class UserList {
+  +Long id
+  +String name
+  +boolean isPublic
+  --
+  +User user
+  +List<UserListItem> items
+}
+
+class UserListItem {
+  +Long id
+  +LocalDateTime addedAt
+  --
+  +UserList userList
+  +Book book
+}
+
+User "1" --> "0..*" Rating : writes >
+User "1" --> "0..*" UserList : owns >
+Book "1" --> "0..*" Rating : has >
+Book "1" --> "0..*" BookContributor : has >
+Book "1" --> "0..*" UserListItem : appears in >
+Book "0..*" --> "1" Publisher : published by >
+Book "0..*" --> "1" ComicSeries : part of >
+Contributor "1" --> "0..*" BookContributor : contributes >
+BookContributor "1" --> "1" Role : as >
+UserList "1" --> "0..*" UserListItem : contains >
+UserListItem "1" --> "1" Book : references >
+UserListItem "1" --> "1" UserList : belongs to >
+
+@enduml
