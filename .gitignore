@@ -1,6 +1,6 @@
 backend/target/
 backend/.mvn/wrapper/maven-wrapper.jar
-persistence
+./persistence/**
 !**/src/main/**/target/
 !**/src/test/**/target/
 
