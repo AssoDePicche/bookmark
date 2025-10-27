@@ -1,9 +1,10 @@
 package com.bookmark.application;
 
+import com.bookmark.domain.Email;
 import com.bookmark.domain.Password;
 import com.bookmark.domain.User;
+import com.bookmark.domain.UserRepository;
 import com.bookmark.domain.Username;
-import com.bookmark.infrastructure.persistence.JpaUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
   private final PasswordEncoder encoder;
 
-  private final JpaUserRepository repository;
+  private final UserRepository repository;
 
-  public UserService(PasswordEncoder encoder, JpaUserRepository repository) {
+  public UserService(PasswordEncoder encoder, UserRepository repository) {
     this.encoder = encoder;
 
     this.repository = repository;
@@ -28,27 +29,25 @@ public class UserService {
   }
 
   public User query(Username username) {
-    String value = username.toString();
-
-    return repository.findByUsername_Value(value).orElseThrow(() -> {
-      var message = String.format("User Not Found With Username '%s'", value);
+    return repository.findByUsername(username).orElseThrow(() -> {
+      var message = String.format("User Not Found With Username '%s'", username);
 
       throw new NotFoundException(message);
     });
   }
 
   public User save(User user) {
-    String username = user.getUsername().toString();
+    Username username = user.getUsername();
 
-    if (repository.findByUsername_Value(username).isPresent()) {
+    if (repository.findByUsername(username).isPresent()) {
       String message = String.format("User With Username '%s' Already Exists", username);
 
       throw new DuplicateEntryException(message);
     }
 
-    String email = user.getEmail().toString();
+    Email email = user.getEmail();
 
-    if (repository.findByEmail_Value(email).isPresent()) {
+    if (repository.findByEmail(email).isPresent()) {
       String message = String.format("User With Email '%s' Already Exists", email);
 
       throw new DuplicateEntryException(message);
