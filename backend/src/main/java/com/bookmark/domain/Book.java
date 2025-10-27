@@ -22,11 +22,7 @@ public class Book {
 
   public Book(
       String isbn, String title, String description, String genre, LocalDate publicationDate) {
-    this.isbn = new ISBN(isbn);
-    this.title = new Title(title);
-    this.description = new Description(description);
-    this.genre = genre;
-    this.publicationDate = publicationDate;
+    this(null, isbn, title, description, genre, publicationDate, null, null);
   }
 
   public Book(Long id, String isbn, String title, String description, String genre,
