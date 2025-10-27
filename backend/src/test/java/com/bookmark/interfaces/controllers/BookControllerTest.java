@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.bookmark.interfaces.dto.book.BookRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.javafaker.Faker;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,16 @@ public class BookControllerTest {
 
   private static final String URL = "/api/books";
 
+  private static final Faker faker = new Faker();
+
   @Autowired private MockMvc mvc;
 
   @Autowired private ObjectMapper mapper;
 
   @Test
   void validBookRequestShouldReturnCreatedOnPostMapping() throws Exception {
-    BookRequest request = new BookRequest("Dummy", "Dummy", "Dummy", "Dummy", LocalDate.now());
+    BookRequest request = new BookRequest(faker.code().isbn13(), faker.book().title(),
+        faker.lorem().sentence(), faker.book().genre(), LocalDate.now());
 
     String json = mapper.writeValueAsString(request);
 
