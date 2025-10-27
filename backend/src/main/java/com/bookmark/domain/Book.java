@@ -19,6 +19,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Book {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
+  @AttributeOverride(name = "value", column = @Column(name = "isbn", unique = true))
+  @Embedded
+  private ISBN isbn;
+
   @AttributeOverride(name = "value", column = @Column(name = "title", unique = true))
   @Embedded
   private Title title;
@@ -37,7 +41,9 @@ public class Book {
 
   public Book() {}
 
-  public Book(String title, String description, String genre, LocalDate publicationDate) {
+  public Book(
+      String isbn, String title, String description, String genre, LocalDate publicationDate) {
+    this.isbn = new ISBN(isbn);
     this.title = new Title(title);
     this.description = new Description(description);
     this.genre = genre;
@@ -46,6 +52,10 @@ public class Book {
 
   public Long getId() {
     return id;
+  }
+
+  public ISBN getISBN() {
+    return isbn;
   }
 
   public Title getTitle() {

@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookMapper {
   public Book map(BookRequest request) {
-    return new Book(
-        request.title(), request.description(), request.genre(), request.publicationDate());
+    return new Book(request.isbn(), request.title(), request.description(), request.genre(),
+        request.publicationDate());
   }
 
   public BookResponse map(Book book) {
-    return new BookResponse(book.getTitle().toString(), book.getDescription().toString(),
-        book.getGenre(), book.getPublicationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+    return new BookResponse(book.getISBN().toString(), book.getTitle().toString(),
+        book.getDescription().toString(), book.getGenre(),
+        book.getPublicationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
   }
 }
