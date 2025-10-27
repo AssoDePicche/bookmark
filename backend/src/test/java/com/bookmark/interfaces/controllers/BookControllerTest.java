@@ -30,7 +30,7 @@ public class BookControllerTest {
 
   @Test
   void validBookRequestShouldReturnCreatedOnPostMapping() throws Exception {
-    BookRequest request = new BookRequest("Dummy", "Dummy", "Dummy", LocalDate.now());
+    BookRequest request = new BookRequest("Dummy", "Dummy", "Dummy", "Dummy", LocalDate.now());
 
     String json = mapper.writeValueAsString(request);
 
