@@ -13,6 +13,14 @@ public class BookService {
   }
 
   public Book save(Book book) {
+    String title = book.getTitle().toString();
+
+    if (repository.findByTitle_Value(title).isPresent()) {
+      String message = String.format("Book With Title '%s' Already Exists", title);
+
+      throw new DuplicateEntryException(message);
+    }
+
     return repository.save(book);
   }
 }
