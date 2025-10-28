@@ -5,9 +5,11 @@ import com.bookmark.domain.User;
 import com.bookmark.domain.Username;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -25,6 +27,10 @@ public class AuthenticationService {
     this.encoder = encoder;
 
     this.service = service;
+  }
+
+  public String authenticate(String username, String rawPassword) {
+    return authenticate(new Username(username), new Password(rawPassword));
   }
 
   public String authenticate(Username username, Password rawPassword) {
@@ -54,15 +60,19 @@ public class AuthenticationService {
 
     User user = service.query(userId);
 
-    UserDetails principal = org.springframework.security.core.userdetails.User.builder()
-                                .accountExpired(false)
-                                .accountLocked(false)
-                                .credentialsExpired(false)
-                                .disabled(false)
-                                .username(user.getUsername().toString())
-                                .password(user.getPassword().toString())
-                                .authorities(user.getAuthorities())
-                                .build();
+    UserDetails principal =
+        org.springframework.security.core.userdetails.User.builder()
+            .accountExpired(false)
+            .accountLocked(false)
+            .credentialsExpired(false)
+            .disabled(false)
+            .username(user.getUsername().toString())
+            .password(user.getPassword().toString())
+            .authorities(List.of(user.getRole())
+                             .stream()
+                             .map(role -> new SimpleGrantedAuthority(role.toString()))
+                             .toList())
+            .build();
 
     Object credentials = null;
 

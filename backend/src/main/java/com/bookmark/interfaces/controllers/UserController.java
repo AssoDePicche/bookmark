@@ -74,9 +74,7 @@ public class UserController {
   @PostMapping("/authenticate")
   public ResponseEntity<UserAuthenticationResponse> post(
       @RequestBody @Valid UserAuthenticationRequest request) {
-    User user = mapper.map(request);
-
-    String token = authenticationService.authenticate(user.getUsername(), user.getPassword());
+    String token = authenticationService.authenticate(request.username(), request.password());
 
     UserAuthenticationResponse response = new UserAuthenticationResponse(token);
 

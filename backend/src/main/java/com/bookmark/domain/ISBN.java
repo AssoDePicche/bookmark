@@ -1,8 +1,5 @@
 package com.bookmark.domain;
 
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public record ISBN(String value) {
   public ISBN {
     if (value.isEmpty()) {
