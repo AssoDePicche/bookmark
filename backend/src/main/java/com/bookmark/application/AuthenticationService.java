@@ -3,7 +3,6 @@ package com.bookmark.application;
 import com.bookmark.domain.Password;
 import com.bookmark.domain.User;
 import com.bookmark.domain.Username;
-import com.bookmark.infrastructure.security.CustomUserDetails;
 import java.time.Instant;
 import java.util.Collection;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -37,21 +36,11 @@ public class AuthenticationService {
       throw new SecurityException(message);
     }
 
-    var now = Instant.now();
-
-    var secondsToExpire = 3600L;
-
-    var expiresAt = now.plusSeconds(secondsToExpire);
-
-    var subject = user.getUsername().toString();
-
-    String issuer = "spring-security";
-
     var claims = JwtClaimsSet.builder()
-                     .issuer(issuer)
-                     .issuedAt(now)
-                     .expiresAt(expiresAt)
-                     .subject(subject)
+                     .issuer("spring-security")
+                     .issuedAt(Instant.now())
+                     .expiresAt(Instant.now().plusSeconds(3600L))
+                     .subject(user.getUsername().toString())
                      .claim("userId", user.getId())
                      .build();
 
@@ -65,7 +54,15 @@ public class AuthenticationService {
 
     User user = service.query(userId);
 
-    UserDetails principal = new CustomUserDetails(user);
+    UserDetails principal = org.springframework.security.core.userdetails.User.builder()
+                                .accountExpired(false)
+                                .accountLocked(false)
+                                .credentialsExpired(false)
+                                .disabled(false)
+                                .username(user.getUsername().toString())
+                                .password(user.getPassword().toString())
+                                .authorities(user.getAuthorities())
+                                .build();
 
     Object credentials = null;
 
