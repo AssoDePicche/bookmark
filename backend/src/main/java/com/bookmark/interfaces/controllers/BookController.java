@@ -36,7 +36,7 @@ public class BookController {
 
     service.save(book);
 
-    String pathname = String.format("/api/books/%d", book.getId());
+    String pathname = "/api/books/" + book.getId();
 
     URI uri = new URI(pathname);
 

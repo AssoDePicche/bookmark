@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Book {
-  private Long id;
+  private BookId id;
 
-  private ISBN isbn;
+  private Isbn isbn;
 
   private Title title;
 
@@ -22,13 +22,13 @@ public class Book {
 
   public Book(
       String isbn, String title, String description, String genre, LocalDate publicationDate) {
-    this(null, isbn, title, description, genre, publicationDate, null, null);
+    this(new BookId(), isbn, title, description, genre, publicationDate, null, null);
   }
 
-  public Book(Long id, String isbn, String title, String description, String genre,
+  public Book(BookId id, String isbn, String title, String description, String genre,
       LocalDate publicationDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
     this.id = id;
-    this.isbn = new ISBN(isbn);
+    this.isbn = new Isbn(isbn);
     this.title = new Title(title);
     this.description = new Description(description);
     this.genre = genre;
@@ -37,11 +37,11 @@ public class Book {
     this.updatedAt = updatedAt;
   }
 
-  public Long getId() {
+  public BookId getId() {
     return id;
   }
 
-  public ISBN getISBN() {
+  public Isbn getIsbn() {
     return isbn;
   }
 

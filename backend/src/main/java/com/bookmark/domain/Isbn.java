@@ -1,7 +1,7 @@
 package com.bookmark.domain;
 
-public record ISBN(String value) {
-  public ISBN {
+public record Isbn(String value) {
+  public Isbn {
     if (value.isEmpty()) {
       throw new IllegalArgumentException("Invalid ISBN format.");
     }

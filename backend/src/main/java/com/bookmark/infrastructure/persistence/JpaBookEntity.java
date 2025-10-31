@@ -8,14 +8,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class JpaBook {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+public class JpaBookEntity {
+  @GeneratedValue(strategy = GenerationType.UUID) @Id private UUID id;
 
   @Column(name = "isbn", unique = true) private String isbn;
 
@@ -31,9 +32,9 @@ public class JpaBook {
 
   @LastModifiedDate private LocalDateTime updatedAt;
 
-  public JpaBook() {}
+  public JpaBookEntity() {}
 
-  public JpaBook(
+  public JpaBookEntity(
       String isbn, String title, String description, String genre, LocalDate publicationDate) {
     this.isbn = isbn;
     this.title = title;
@@ -42,11 +43,11 @@ public class JpaBook {
     this.publicationDate = publicationDate;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public String getISBN() {
+  public String getIsbn() {
     return isbn;
   }
 

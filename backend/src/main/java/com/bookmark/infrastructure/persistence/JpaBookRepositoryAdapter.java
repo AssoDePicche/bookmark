@@ -26,7 +26,7 @@ public class JpaBookRepositoryAdapter implements BookRepository {
 
   @Override
   public Book save(Book book) {
-    JpaBook entity = mapper.mapToJpa(book);
+    JpaBookEntity entity = mapper.mapToJpa(book);
 
     return mapper.map(repository.save(entity));
   }
