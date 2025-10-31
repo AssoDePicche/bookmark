@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class User {
-  private Long id;
+  private UserId id;
 
   private Username username;
 
@@ -20,10 +20,10 @@ public class User {
   private LocalDateTime updatedAt;
 
   public User(String email, String username, String password, String role) {
-    this(null, email, username, password, role, null, null);
+    this(new UserId(), email, username, password, role, null, null);
   }
 
-  public User(Long id, String email, String username, String password, String role,
+  public User(UserId id, String email, String username, String password, String role,
       LocalDateTime createdAt, LocalDateTime updatedAt) {
     this.id = id;
 
@@ -40,7 +40,7 @@ public class User {
     this.updatedAt = updatedAt;
   }
 
-  public Long getId() {
+  public UserId getId() {
     return id;
   }
 

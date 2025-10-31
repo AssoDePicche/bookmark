@@ -1,7 +1,8 @@
 package com.bookmark.interfaces.mappers;
 
 import com.bookmark.domain.User;
-import com.bookmark.infrastructure.persistence.JpaUser;
+import com.bookmark.domain.UserId;
+import com.bookmark.infrastructure.persistence.JpaUserEntity;
 import com.bookmark.interfaces.dto.user.UserAuthenticationRequest;
 import com.bookmark.interfaces.dto.user.UserRegistrationRequest;
 import com.bookmark.interfaces.dto.user.UserResponse;
@@ -16,18 +17,18 @@ public class UserMapper {
     this.formatter = formatter;
   }
 
-  public User map(JpaUser user) {
-    return new User(user.getId(), user.getEmail(), user.getUsername(), user.getPassword(),
-        user.getRole(), user.getCreatedAt(), user.getUpdatedAt());
+  public User map(JpaUserEntity user) {
+    return new User(new UserId(user.getId()), user.getEmail(), user.getUsername(),
+        user.getPassword(), user.getRole(), user.getCreatedAt(), user.getUpdatedAt());
   }
 
-  public JpaUser mapToJpa(User user) {
-    return new JpaUser(user.getEmail().toString(), user.getUsername().toString(),
+  public JpaUserEntity mapToJpa(User user) {
+    return new JpaUserEntity(user.getEmail().toString(), user.getUsername().toString(),
         user.getPassword().toString(), user.getRole().toString());
   }
 
   public UserResponse map(User user) {
-    return new UserResponse(user.getId(), user.getUsername().toString(), user.getEmail().toString(),
+    return new UserResponse(user.getUsername().toString(), user.getEmail().toString(),
         user.getCreatedAt().format(formatter), user.getUpdatedAt().format(formatter));
   }
 

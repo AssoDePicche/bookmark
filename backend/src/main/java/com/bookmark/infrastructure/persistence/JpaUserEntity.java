@@ -8,14 +8,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class JpaUser {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+public class JpaUserEntity {
+  @GeneratedValue(strategy = GenerationType.UUID) @Id private UUID id;
 
   @Column(name = "username", unique = true) private String username;
 
@@ -29,9 +30,9 @@ public class JpaUser {
 
   @LastModifiedDate private LocalDateTime updatedAt;
 
-  public JpaUser() {}
+  public JpaUserEntity() {}
 
-  public JpaUser(String email, String username, String password, String role) {
+  public JpaUserEntity(String email, String username, String password, String role) {
     this.email = email;
 
     this.username = username;
@@ -41,7 +42,7 @@ public class JpaUser {
     this.role = role;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
