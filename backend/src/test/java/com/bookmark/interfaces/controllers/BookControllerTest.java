@@ -32,7 +32,7 @@ public class BookControllerTest {
   @Autowired private ObjectMapper mapper;
 
   @Test
-  void validBookRequestShouldReturnCreatedOnPostMapping() throws Exception {
+  void validBookRequestShouldReturnCreated() throws Exception {
     BookRequest request = new BookRequest(faker.code().isbn13(), faker.book().title(),
         faker.lorem().sentence(), faker.book().genre(), LocalDate.now());
 
