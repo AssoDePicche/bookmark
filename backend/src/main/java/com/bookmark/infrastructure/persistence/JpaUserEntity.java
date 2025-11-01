@@ -1,13 +1,12 @@
 package com.bookmark.infrastructure.persistence;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,8 +14,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "user")
 public class JpaUserEntity {
-  @GeneratedValue(strategy = GenerationType.UUID) @Id private UUID id;
+  @Id private UUID id;
 
   @Column(name = "username", unique = true) private String username;
 
@@ -26,16 +26,20 @@ public class JpaUserEntity {
 
   public String role;
 
-  @CreatedDate private LocalDateTime createdAt;
+  @Column(name = "created_at", nullable = false, updatable = false)
+  @CreatedDate
+  private LocalDateTime createdAt;
 
-  @LastModifiedDate private LocalDateTime updatedAt;
+  @Column(name = "updated_at", nullable = false) @LastModifiedDate private LocalDateTime updatedAt;
 
   public JpaUserEntity() {}
 
-  public JpaUserEntity(String email, String username, String password, String role) {
-    this.email = email;
+  public JpaUserEntity(UUID id, String username, String email, String password, String role) {
+    this.id = id;
 
     this.username = username;
+
+    this.email = email;
 
     this.password = password;
 

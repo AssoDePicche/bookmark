@@ -19,20 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 public class BookController {
-  private final BookMapper mapper;
-
   private final BookService service;
 
-  public BookController(BookMapper mapper, BookService service) {
-    this.mapper = mapper;
-
+  public BookController(BookService service) {
     this.service = service;
   }
 
   @PostMapping
   public ResponseEntity<BookResponse> post(@RequestBody @Valid BookRequest request)
       throws URISyntaxException {
-    Book book = mapper.map(request);
+    Book book = BookMapper.map(request);
 
     service.save(book);
 
@@ -40,7 +36,7 @@ public class BookController {
 
     URI uri = new URI(pathname);
 
-    BookResponse response = mapper.map(book);
+    BookResponse response = BookMapper.map(book);
 
     return ResponseEntity.created(uri).body(response);
   }

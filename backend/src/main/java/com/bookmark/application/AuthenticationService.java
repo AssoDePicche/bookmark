@@ -2,6 +2,7 @@ package com.bookmark.application;
 
 import com.bookmark.domain.Password;
 import com.bookmark.domain.User;
+import com.bookmark.domain.UserId;
 import com.bookmark.domain.Username;
 import java.time.Instant;
 import java.util.Collection;
@@ -47,7 +48,7 @@ public class AuthenticationService {
                      .issuedAt(Instant.now())
                      .expiresAt(Instant.now().plusSeconds(3600L))
                      .subject(user.getUsername().toString())
-                     .claim("userId", user.getId())
+                     .claim("userId", user.getId().toString())
                      .build();
 
     var parameters = JwtEncoderParameters.from(claims);
@@ -56,9 +57,9 @@ public class AuthenticationService {
   }
 
   public AbstractAuthenticationToken authenticate(Jwt jwt) {
-    Long userId = jwt.getClaim("userId");
+    String userId = jwt.getClaim("userId");
 
-    User user = service.query(userId);
+    User user = service.query(new UserId(userId));
 
     UserDetails principal =
         org.springframework.security.core.userdetails.User.builder()

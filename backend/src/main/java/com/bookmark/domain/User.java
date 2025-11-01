@@ -1,9 +1,5 @@
 package com.bookmark.domain;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-
 public class User {
   private UserId id;
 
@@ -15,16 +11,11 @@ public class User {
 
   private UserRole role;
 
-  private LocalDateTime createdAt;
-
-  private LocalDateTime updatedAt;
-
   public User(String email, String username, String password, String role) {
-    this(new UserId(), email, username, password, role, null, null);
+    this(new UserId(), email, username, password, role);
   }
 
-  public User(UserId id, String email, String username, String password, String role,
-      LocalDateTime createdAt, LocalDateTime updatedAt) {
+  public User(UserId id, String email, String username, String password, String role) {
     this.id = id;
 
     this.email = new Email(email);
@@ -34,10 +25,6 @@ public class User {
     this.password = new Password(password);
 
     this.role = UserRole.from(role);
-
-    this.createdAt = createdAt;
-
-    this.updatedAt = updatedAt;
   }
 
   public UserId getId() {
@@ -62,13 +49,5 @@ public class User {
 
   public UserRole getRole() {
     return role;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
   }
 }

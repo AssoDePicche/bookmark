@@ -16,25 +16,19 @@ public class Book {
 
   private LocalDate publicationDate;
 
-  private LocalDateTime createdAt;
-
-  private LocalDateTime updatedAt;
-
   public Book(
       String isbn, String title, String description, String genre, LocalDate publicationDate) {
-    this(new BookId(), isbn, title, description, genre, publicationDate, null, null);
+    this(new BookId(), isbn, title, description, genre, publicationDate);
   }
 
   public Book(BookId id, String isbn, String title, String description, String genre,
-      LocalDate publicationDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+      LocalDate publicationDate) {
     this.id = id;
     this.isbn = new Isbn(isbn);
     this.title = new Title(title);
     this.description = new Description(description);
     this.genre = genre;
     this.publicationDate = publicationDate;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 
   public BookId getId() {
@@ -59,13 +53,5 @@ public class Book {
 
   public LocalDate getPublicationDate() {
     return publicationDate;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
   }
 }

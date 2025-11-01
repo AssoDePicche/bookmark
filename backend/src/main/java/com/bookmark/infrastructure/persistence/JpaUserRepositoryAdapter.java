@@ -2,9 +2,9 @@ package com.bookmark.infrastructure.persistence;
 
 import com.bookmark.domain.Email;
 import com.bookmark.domain.User;
+import com.bookmark.domain.UserId;
 import com.bookmark.domain.UserRepository;
 import com.bookmark.domain.Username;
-import com.bookmark.interfaces.mappers.UserMapper;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
@@ -12,33 +12,31 @@ import org.springframework.stereotype.Repository;
 public class JpaUserRepositoryAdapter implements UserRepository {
   private final JpaUserRepository repository;
 
-  private final UserMapper mapper;
-
-  public JpaUserRepositoryAdapter(JpaUserRepository repository, UserMapper mapper) {
+  public JpaUserRepositoryAdapter(JpaUserRepository repository) {
     this.repository = repository;
-
-    this.mapper = mapper;
   }
 
   @Override
   public Optional<User> findByEmail(Email email) {
-    return repository.findByEmail(email.toString()).map(mapper::map);
+    return repository.findByEmail(email.toString()).map(JpaUserEntityMapper::map);
   }
 
   @Override
-  public Optional<User> findById(Long id) {
-    return repository.findById(id).map(mapper::map);
+  public Optional<User> findById(UserId id) {
+    return repository.findById(id.value()).map(JpaUserEntityMapper::map);
   }
 
   @Override
   public Optional<User> findByUsername(Username username) {
-    return repository.findByUsername(username.toString()).map(mapper::map);
+    return repository.findByUsername(username.toString()).map(JpaUserEntityMapper::map);
   }
 
   @Override
   public User save(User user) {
-    JpaUserEntity entity = mapper.mapToJpa(user);
+    JpaUserEntity entity = JpaUserEntityMapper.map(user);
 
-    return mapper.map(repository.save(entity));
+    repository.save(entity);
+
+    return JpaUserEntityMapper.map(entity);
   }
 }

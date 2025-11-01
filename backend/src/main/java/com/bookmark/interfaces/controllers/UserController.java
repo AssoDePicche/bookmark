@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,18 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/users")
 @RestController
+@Validated
 public class UserController {
-  private final UserMapper mapper;
-
-  private final UserService service;
+  private final UserService userService;
 
   private final AuthenticationService authenticationService;
 
-  public UserController(
-      UserMapper mapper, UserService service, AuthenticationService authenticationService) {
-    this.mapper = mapper;
-
-    this.service = service;
+  public UserController(UserService userService, AuthenticationService authenticationService) {
+    this.userService = userService;
 
     this.authenticationService = authenticationService;
   }
@@ -48,9 +45,9 @@ public class UserController {
 
     Username username = new Username(details.getUsername());
 
-    User user = service.query(username);
+    User user = userService.query(username);
 
-    UserResponse response = mapper.map(user);
+    UserResponse response = UserMapper.map(user);
 
     return ResponseEntity.ok(response);
   }
@@ -58,15 +55,15 @@ public class UserController {
   @PostMapping("/register")
   public ResponseEntity<UserResponse> post(@RequestBody @Valid UserRegistrationRequest request)
       throws URISyntaxException {
-    User user = mapper.map(request);
+    User user = UserMapper.map(request);
 
-    service.save(user);
+    userService.save(user);
 
-    String pathname = String.format("/api/users/%d", user.getId());
+    String pathname = "/api/users/" + user.getId();
 
     URI uri = new URI(pathname);
 
-    UserResponse response = mapper.map(user);
+    UserResponse response = UserMapper.map(user);
 
     return ResponseEntity.created(uri).body(response);
   }

@@ -9,6 +9,10 @@ public record UserId(UUID value) {
     }
   }
 
+  public UserId(String value) {
+    this(UUID.fromString(value));
+  }
+
   public UserId() {
     this(UUID.randomUUID());
   }

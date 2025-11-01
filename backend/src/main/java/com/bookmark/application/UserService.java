@@ -3,6 +3,7 @@ package com.bookmark.application;
 import com.bookmark.domain.Email;
 import com.bookmark.domain.Password;
 import com.bookmark.domain.User;
+import com.bookmark.domain.UserId;
 import com.bookmark.domain.UserRepository;
 import com.bookmark.domain.Username;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,9 +21,9 @@ public class UserService {
     this.repository = repository;
   }
 
-  public User query(Long id) {
+  public User query(UserId id) {
     return repository.findById(id).orElseThrow(() -> {
-      var message = String.format("User Not Found With ID '%d'", id);
+      var message = String.format("User Not Found With ID '%s'", id);
 
       throw new NotFoundException(message);
     });
