@@ -1,4 +1,4 @@
-package com.bookmark.infrastructure.persistence;
+package com.bookmark.infrastructure.adapters.persistence;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

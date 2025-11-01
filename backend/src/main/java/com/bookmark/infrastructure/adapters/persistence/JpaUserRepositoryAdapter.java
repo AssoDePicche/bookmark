@@ -1,4 +1,4 @@
-package com.bookmark.infrastructure.persistence;
+package com.bookmark.infrastructure.adapters.persistence;
 
 import com.bookmark.domain.Email;
 import com.bookmark.domain.User;
