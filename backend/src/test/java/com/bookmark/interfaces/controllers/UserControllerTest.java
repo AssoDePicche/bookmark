@@ -3,7 +3,7 @@ package com.bookmark.interfaces.controllers;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.bookmark.interfaces.dto.user.UserRegistrationRequest;
+import com.bookmark.user.interfaces.UserRegistrationRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import java.time.LocalDate;

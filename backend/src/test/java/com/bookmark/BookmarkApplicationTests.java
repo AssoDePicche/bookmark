@@ -38,7 +38,7 @@ public class BookmarkApplicationTests {
           .or()
           .haveNameMatching(".*Entity")
           .should()
-          .resideInAPackage("..infrastructure.adapters.persistence..");
+          .resideInAPackage("..infrastructure.persistence..");
 
   @ArchTest
   public static final ArchRule controllersMustResideInInterfaces =
@@ -46,7 +46,7 @@ public class BookmarkApplicationTests {
           .that()
           .haveNameMatching(".*Controller")
           .should()
-          .resideInAPackage("..interfaces.controllers..")
+          .resideInAPackage("..interfaces..")
           .andShould()
           .beAnnotatedWith("org.springframework.web.bind.annotation.RestController")
           .as("Controllers should be placed in the interfaces layer and use the appropriate Spring "
