@@ -2,6 +2,7 @@ package com.bookmark;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
+import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
@@ -50,6 +51,14 @@ public class BookmarkApplicationTests {
           .beAnnotatedWith("org.springframework.web.bind.annotation.RestController")
           .as("Controllers should be placed in the interfaces layer and use the appropriate Spring "
               + "annotation.");
+
+  @ArchTest
+  public static final ArchRule modulesShouldNotHaveCyclicDependencies =
+      slices()
+          .matching("com.bookmark.(*)..")
+          .should()
+          .beFreeOfCycles()
+          .as("All top-level logical modules should be free of dependency cycles.");
 
   @Test
   public void contextLoads() {}
