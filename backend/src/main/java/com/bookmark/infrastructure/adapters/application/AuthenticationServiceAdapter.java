@@ -1,5 +1,6 @@
-package com.bookmark.application;
+package com.bookmark.infrastructure.adapters.application;
 
+import com.bookmark.application.UserService;
 import com.bookmark.domain.Password;
 import com.bookmark.domain.User;
 import com.bookmark.domain.UserId;
@@ -19,12 +20,12 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationServiceAdapter {
   private final JwtEncoder encoder;
 
   private final UserService service;
 
-  public AuthenticationService(JwtEncoder encoder, UserService service) {
+  public AuthenticationServiceAdapter(JwtEncoder encoder, UserService service) {
     this.encoder = encoder;
 
     this.service = service;

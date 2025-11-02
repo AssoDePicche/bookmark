@@ -1,9 +1,9 @@
 package com.bookmark.interfaces.controllers;
 
-import com.bookmark.application.AuthenticationService;
 import com.bookmark.application.UserService;
 import com.bookmark.domain.User;
 import com.bookmark.domain.Username;
+import com.bookmark.infrastructure.adapters.application.AuthenticationServiceAdapter;
 import com.bookmark.interfaces.dto.user.UserAuthenticationRequest;
 import com.bookmark.interfaces.dto.user.UserAuthenticationResponse;
 import com.bookmark.interfaces.dto.user.UserRegistrationRequest;
@@ -29,9 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   private final UserService userService;
 
-  private final AuthenticationService authenticationService;
+  private final AuthenticationServiceAdapter authenticationService;
 
-  public UserController(UserService userService, AuthenticationService authenticationService) {
+  public UserController(
+      UserService userService, AuthenticationServiceAdapter authenticationService) {
     this.userService = userService;
 
     this.authenticationService = authenticationService;
