@@ -2,7 +2,7 @@ package com.bookmark.domain;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import com.bookmark.list.domain.Notes;
+import com.bookmark.booklist.domain.Notes;
 import org.junit.jupiter.api.Test;
 
 public class BookListTest {

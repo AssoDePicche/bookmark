@@ -1,4 +1,4 @@
-package com.bookmark.list.domain;
+package com.bookmark.booklist.domain;
 
 public record Notes(String value, boolean containSpoilers) {
   public Notes() {
