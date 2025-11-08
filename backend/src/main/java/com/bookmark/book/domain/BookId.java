@@ -9,6 +9,10 @@ public record BookId(UUID value) {
     }
   }
 
+  public BookId(String value) {
+    this(UUID.fromString(value));
+  }
+
   public BookId() {
     this(UUID.randomUUID());
   }
