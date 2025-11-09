@@ -1,4 +1,4 @@
-package com.bookmark.common.interfaces;
+package com.bookmark.common.domain;
 
 import java.util.List;
 

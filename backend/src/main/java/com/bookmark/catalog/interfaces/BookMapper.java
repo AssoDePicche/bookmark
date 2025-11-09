@@ -1,6 +1,8 @@
 package com.bookmark.catalog.interfaces;
 
 import com.bookmark.catalog.domain.Book;
+import com.bookmark.common.domain.Paged;
+import com.bookmark.common.infrastructure.mapper.PageMapper;
 import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 
@@ -15,5 +17,9 @@ public class BookMapper {
     return new BookResponse(book.getIsbn().toString(), book.getTitle().toString(),
         book.getDescription().toString(), book.getGenre(),
         book.getPublicationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+  }
+
+  public static Paged<BookResponse> map(Paged<Book> pagedBooks) {
+    return PageMapper.map(pagedBooks, (book) -> map(book));
   }
 }
