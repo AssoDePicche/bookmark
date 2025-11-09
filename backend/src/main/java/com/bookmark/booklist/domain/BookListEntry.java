@@ -1,6 +1,6 @@
 package com.bookmark.booklist.domain;
 
-import com.bookmark.book.domain.BookId;
+import com.bookmark.catalog.domain.BookId;
 import java.time.LocalDateTime;
 
 public record BookListEntry(BookId book, Notes notes, LocalDateTime dateAdded) {

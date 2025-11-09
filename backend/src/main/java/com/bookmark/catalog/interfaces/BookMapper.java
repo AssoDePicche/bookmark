@@ -1,6 +1,6 @@
-package com.bookmark.book.interfaces;
+package com.bookmark.catalog.interfaces;
 
-import com.bookmark.book.domain.Book;
+import com.bookmark.catalog.domain.Book;
 import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
-package com.bookmark.book.infrastructure;
+package com.bookmark.catalog.infrastructure;
 
-import com.bookmark.book.application.BookSearch;
-import com.bookmark.book.application.BookSearchResult;
-import com.bookmark.book.domain.Isbn;
+import com.bookmark.catalog.application.BookSearch;
+import com.bookmark.catalog.application.BookSearchResult;
+import com.bookmark.catalog.domain.Isbn;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 

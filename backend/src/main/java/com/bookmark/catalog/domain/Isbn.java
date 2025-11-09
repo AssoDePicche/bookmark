@@ -1,4 +1,4 @@
-package com.bookmark.book.domain;
+package com.bookmark.catalog.domain;
 
 public record Isbn(String value) {
   public Isbn {

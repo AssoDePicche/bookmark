@@ -1,4 +1,4 @@
-package com.bookmark.book.domain;
+package com.bookmark.catalog.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

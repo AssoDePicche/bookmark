@@ -1,7 +1,7 @@
-package com.bookmark.book.interfaces;
+package com.bookmark.catalog.interfaces;
 
-import com.bookmark.book.application.BookService;
-import com.bookmark.book.domain.Book;
+import com.bookmark.catalog.application.BookService;
+import com.bookmark.catalog.domain.Book;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;

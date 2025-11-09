@@ -1,8 +1,8 @@
-package com.bookmark.book.infrastructure.persistence;
+package com.bookmark.catalog.infrastructure.persistence;
 
-import com.bookmark.book.domain.Book;
-import com.bookmark.book.domain.BookRepository;
-import com.bookmark.book.domain.Title;
+import com.bookmark.catalog.domain.Book;
+import com.bookmark.catalog.domain.BookRepository;
+import com.bookmark.catalog.domain.Title;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 

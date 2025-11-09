@@ -1,6 +1,6 @@
 package com.bookmark.booklist.domain;
 
-import com.bookmark.book.domain.BookId;
+import com.bookmark.catalog.domain.BookId;
 import com.bookmark.user.domain.UserId;
 import java.util.ArrayList;
 import java.util.List;

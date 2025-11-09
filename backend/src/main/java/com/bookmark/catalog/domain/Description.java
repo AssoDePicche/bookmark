@@ -1,4 +1,4 @@
-package com.bookmark.book.domain;
+package com.bookmark.catalog.domain;
 
 public record Description(String value) {
   public Description {

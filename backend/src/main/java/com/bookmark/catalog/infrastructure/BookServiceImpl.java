@@ -1,9 +1,9 @@
-package com.bookmark.book.infrastructure;
+package com.bookmark.catalog.infrastructure;
 
-import com.bookmark.book.application.BookService;
-import com.bookmark.book.domain.Book;
-import com.bookmark.book.domain.BookRepository;
-import com.bookmark.book.domain.Title;
+import com.bookmark.catalog.application.BookService;
+import com.bookmark.catalog.domain.Book;
+import com.bookmark.catalog.domain.BookRepository;
+import com.bookmark.catalog.domain.Title;
 import com.bookmark.common.domain.exception.DuplicateEntryException;
 import com.bookmark.common.domain.exception.NotFoundException;
 import org.springframework.stereotype.Service;
