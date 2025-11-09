@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     Username username = user.getUsername();
 
     if (repository.findByUsername(username).isPresent()) {
-      String message = String.format("User With Username '%s' Already Exists", username);
+      var message = String.format("User With Username '%s' Already Exists", username);
 
       throw new DuplicateEntryException(message);
     }
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     Email email = user.getEmail();
 
     if (repository.findByEmail(email).isPresent()) {
-      String message = String.format("User With Email '%s' Already Exists", email);
+      var message = String.format("User With Email '%s' Already Exists", email);
 
       throw new DuplicateEntryException(message);
     }
@@ -65,10 +65,5 @@ public class UserServiceImpl implements UserService {
     user.setPassword(encodedPassword);
 
     return repository.save(user);
-  }
-
-  @Override
-  public boolean matches(Password rawPassword, Password encrypted) {
-    return encoder.matches(rawPassword.toString(), encrypted.toString());
   }
 }

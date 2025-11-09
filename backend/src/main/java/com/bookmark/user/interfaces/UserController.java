@@ -1,6 +1,5 @@
 package com.bookmark.user.interfaces;
 
-import com.bookmark.user.application.AuthenticationService;
 import com.bookmark.user.application.UserService;
 import com.bookmark.user.domain.Password;
 import com.bookmark.user.domain.User;
@@ -23,14 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 public class UserController {
-  private final UserService userService;
+  private final UserService service;
 
-  private final AuthenticationService authenticationService;
-
-  public UserController(UserService userService, AuthenticationService authenticationService) {
-    this.userService = userService;
-
-    this.authenticationService = authenticationService;
+  public UserController(UserService service) {
+    this.service = service;
   }
 
   @GetMapping("/me")
@@ -41,7 +36,7 @@ public class UserController {
 
     Username username = new Username(details.getUsername());
 
-    User user = userService.query(username);
+    User user = service.query(username);
 
     UserResponse response = UserMapper.map(user);
 
@@ -53,7 +48,7 @@ public class UserController {
       throws URISyntaxException {
     User user = UserMapper.map(request);
 
-    userService.save(user);
+    service.save(user);
 
     String pathname = "/api/users/" + user.getId();
 
@@ -62,19 +57,5 @@ public class UserController {
     UserResponse response = UserMapper.map(user);
 
     return ResponseEntity.created(uri).body(response);
-  }
-
-  @PostMapping("/authenticate")
-  public ResponseEntity<UserAuthenticationResponse> post(
-      @RequestBody @Valid UserAuthenticationRequest request) {
-    Username username = new Username(request.username());
-
-    Password password = new Password(request.password());
-
-    String token = authenticationService.authenticate(username, password);
-
-    UserAuthenticationResponse response = new UserAuthenticationResponse(token);
-
-    return ResponseEntity.ok(response);
   }
 }

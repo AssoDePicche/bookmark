@@ -1,6 +1,6 @@
 package com.bookmark.user.infrastructure.configuration;
 
-import com.bookmark.user.infrastructure.AuthenticationTokenConverter;
+import com.bookmark.iam.infrastructure.AuthenticationTokenConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -35,7 +35,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     return security.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(request
             -> request
-                   .requestMatchers("/api/actuator/**", "/api/users/authenticate",
+                   .requestMatchers("/api/actuator/**", "/api/iam/authenticate",
                        "/api/users/register", "/swagger-ui/**", "/swagger-ui.html",
                        "/v3/api-docs/**")
                    .permitAll()
