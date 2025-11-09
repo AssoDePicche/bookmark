@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface BookListRepository {
   Optional<BookList> findById(BookListId id);
 
+  Optional<BookList> findByTitle(Title title);
+
   List<BookList> findByUser(UserId user);
 
   BookList save(BookList list);
