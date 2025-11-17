@@ -3,22 +3,43 @@ package com.bookmark.booklist.domain;
 import com.bookmark.catalog.domain.BookId;
 import java.time.LocalDateTime;
 
-public record BookListEntry(BookId book, Notes notes, LocalDateTime dateAdded) {
-  public BookListEntry {
-    if (null == book) {
-      throw new IllegalArgumentException("Book List Entry BookId Must Not Be Null");
-    }
+public class BookListEntry {
+  private BookListEntryId id;
 
-    if (null == notes) {
-      throw new IllegalArgumentException("Book List Entry Notes Must Not Be Null");
-    }
+  private BookId book;
 
-    if (null == dateAdded) {
-      throw new IllegalArgumentException("Book List Entry Date Added Must Not Be Null");
-    }
+  private Notes notes;
+
+  private LocalDateTime dateAdded;
+
+  public BookListEntry(BookId book, String notes, boolean containSpoilers) {
+    this(new BookListEntryId(), book, notes, containSpoilers, LocalDateTime.now());
   }
 
-  public BookListEntry(BookId book, Notes notes) {
-    this(book, notes, LocalDateTime.now());
+  public BookListEntry(BookListEntryId id, BookId book, String notes, boolean containSpoilers,
+      LocalDateTime dateAdded) {
+    this.id = id;
+
+    this.book = book;
+
+    this.notes = new Notes(notes, containSpoilers);
+
+    this.dateAdded = dateAdded;
+  }
+
+  public BookListEntryId getId() {
+    return id;
+  }
+
+  public BookId getBook() {
+    return book;
+  }
+
+  public Notes getNotes() {
+    return notes;
+  }
+
+  public LocalDateTime getDateAdded() {
+    return dateAdded;
   }
 }
