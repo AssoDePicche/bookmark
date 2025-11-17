@@ -1,3 +1,5 @@
 package com.bookmark.user.interfaces;
 
-public record UserResponse(String username, String email) {}
+import java.util.Set;
+
+public record UserResponse(String id, String email, Set<String> roles) {}

@@ -4,7 +4,6 @@ import com.bookmark.user.domain.Email;
 import com.bookmark.user.domain.User;
 import com.bookmark.user.domain.UserId;
 import com.bookmark.user.domain.UserRepository;
-import com.bookmark.user.domain.Username;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
@@ -24,11 +23,6 @@ public class JpaUserRepositoryAdapter implements UserRepository {
   @Override
   public Optional<User> findById(UserId id) {
     return repository.findById(id.value()).map(JpaUserEntityMapper::map);
-  }
-
-  @Override
-  public Optional<User> findByUsername(Username username) {
-    return repository.findByUsername(username.toString()).map(JpaUserEntityMapper::map);
   }
 
   @Override

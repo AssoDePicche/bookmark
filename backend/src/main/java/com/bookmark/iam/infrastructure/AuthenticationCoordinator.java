@@ -12,9 +12,13 @@ public class AuthenticationCoordinator {
     this.encoder = encoder;
   }
 
+  public String encode(String password) {
+    return encoder.encode(password);
+  }
+
   public Identity verifyCredentials(String password, Identity identity) {
-    if (!encoder.matches(password, identity.password())) {
-      throw new SecurityException("Wrong name or Password");
+    if (!encoder.matches(password, identity.getPassword().toString())) {
+      throw new SecurityException("Wrong Username or Password");
     }
 
     return identity;

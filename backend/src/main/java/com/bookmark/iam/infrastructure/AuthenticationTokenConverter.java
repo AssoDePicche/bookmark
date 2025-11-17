@@ -1,8 +1,9 @@
 package com.bookmark.iam.infrastructure;
 
-import com.bookmark.iam.domain.Details;
-import com.bookmark.iam.domain.DetailsProvider;
+import com.bookmark.iam.application.IdentityService;
+import com.bookmark.iam.domain.Identity;
 import java.util.Collection;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -14,13 +15,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 public class AuthenticationTokenConverter implements Converter<Jwt, AbstractAuthenticationToken> {
-  @Autowired private DetailsProvider detailsProvider;
+  @Autowired private IdentityService service;
 
   @Override
   public AbstractAuthenticationToken convert(Jwt jwt) {
-    String userId = jwt.getClaim("userId");
+    String claim = jwt.getClaim("userId");
 
-    Details details = detailsProvider.findById(userId);
+    UUID id = UUID.fromString(claim);
+
+    Identity identity = service.query(id);
 
     UserDetails principal =
         User.builder()
@@ -28,9 +31,9 @@ public class AuthenticationTokenConverter implements Converter<Jwt, AbstractAuth
             .accountLocked(false)
             .credentialsExpired(false)
             .disabled(false)
-            .username(details.username().toString())
-            .password(details.password().toString())
-            .authorities(details.roles().stream().map(SimpleGrantedAuthority::new).toList())
+            .username(identity.getUsername().toString())
+            .password(identity.getPassword().toString())
+            .authorities(identity.getRoles().stream().map(SimpleGrantedAuthority::new).toList())
             .build();
 
     Object credentials = null;

@@ -1,4 +1,4 @@
-package com.bookmark.user.domain;
+package com.bookmark.iam.domain;
 
 public record Password(String value) {
   @Override

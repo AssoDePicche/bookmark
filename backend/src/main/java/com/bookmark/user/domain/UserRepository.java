@@ -7,7 +7,5 @@ public interface UserRepository {
 
   Optional<User> findById(UserId id);
 
-  Optional<User> findByUsername(Username username);
-
   User save(User user);
 }

@@ -26,8 +26,8 @@ public class JsonWebTokenService {
                               .issuer(ISSUER)
                               .issuedAt(now)
                               .expiresAt(now.plusSeconds(TOKEN_EXPIRATION_SECONDS))
-                              .subject(identity.username())
-                              .claim("userId", identity.id())
+                              .subject(identity.getUsername().toString())
+                              .claim("userId", identity.getId().toString())
                               .build();
 
     var parameters = JwtEncoderParameters.from(claims);

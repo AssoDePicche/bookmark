@@ -1,6 +1,7 @@
 package com.bookmark.common.infrastructure.advice;
 
 import com.bookmark.common.domain.exception.DuplicateEntryException;
+import com.bookmark.common.domain.exception.ForbiddenException;
 import com.bookmark.common.domain.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ValidationException;
@@ -33,6 +34,14 @@ public class ControllerAdvice {
   public ResponseEntity<Response>
   conflict(HttpServletRequest request, Exception exception) {
     return from(request, exception, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler({
+      ForbiddenException.class,
+  })
+  public ResponseEntity<Response>
+  forbidden(HttpServletRequest request, Exception exception) {
+    return from(request, exception, HttpStatus.FORBIDDEN);
   }
 
   @ExceptionHandler({

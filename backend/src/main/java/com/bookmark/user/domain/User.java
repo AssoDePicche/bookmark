@@ -1,53 +1,40 @@
 package com.bookmark.user.domain;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class User {
   private UserId id;
 
-  private Username username;
-
   private Email email;
 
-  private Password password;
+  private Set<UserRole> roles;
 
-  private UserRole role;
-
-  public User(String email, String username, String password, String role) {
-    this(new UserId(), email, username, password, role);
+  public User(String email, Set<String> roles) {
+    this(new UserId(), email, roles);
   }
 
-  public User(UserId id, String email, String username, String password, String role) {
+  public User(String id, String email, Set<String> roles) {
+    this(new UserId(id), email, roles);
+  }
+
+  public User(UserId id, String email, Set<String> roles) {
     this.id = id;
 
     this.email = new Email(email);
 
-    this.username = new Username(username);
-
-    this.password = new Password(password);
-
-    this.role = UserRole.from(role);
+    this.roles = roles.stream().map(UserRole::from).collect(Collectors.toSet());
   }
 
   public UserId getId() {
     return id;
   }
 
-  public Username getUsername() {
-    return username;
-  }
-
   public Email getEmail() {
     return email;
   }
 
-  public Password getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = new Password(password);
-  }
-
-  public UserRole getRole() {
-    return role;
+  public Set<UserRole> getRoles() {
+    return roles;
   }
 }

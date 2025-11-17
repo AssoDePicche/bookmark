@@ -38,6 +38,6 @@ public class PageMapper {
     Sort sort = pageable.getSort();
 
     return new Pagination(
-        pageable.getPageNumber(), pageable.getPageSize(), "", Pagination.Sort.ASC);
+        pageable.getPageNumber(), pageable.getPageSize(), "id", Pagination.Sort.ASC);
   }
 }
