@@ -1,8 +1,6 @@
 package com.bookmark.catalog.application;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-public record BookSearchResult(String title, @JsonProperty("publish_date") String publishDate,
-    @JsonProperty("physical_format") String physicalFormat, List<String> publishers,
-    @JsonProperty("isbn_10") List<String> isbn10, @JsonProperty("isbn_13") List<String> isbn13) {}
+public record BookSearchResult(String title, String publishDate, String physicalFormat,
+    List<String> publishers, List<String> isbn10, List<String> isbn13) {}

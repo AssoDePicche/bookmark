@@ -20,6 +20,9 @@ public class OpenLibraryBookSearch implements BookSearch {
   public BookSearchResult execute(Isbn isbn) {
     var URI = String.format("/isbn/{%s}.json", isbn);
 
-    return client.get().uri(URI).retrieve().body(BookSearchResult.class);
+    var result = client.get().uri(URI).retrieve().body(OpenLibraryBookSearchResult.class);
+
+    return new BookSearchResult(result.title(), result.publishDate(), result.physicalFormat(),
+        result.publishers(), result.isbn10(), result.isbn13());
   }
 }
