@@ -3,7 +3,6 @@ package com.bookmark.user.interfaces;
 import com.bookmark.user.application.UserService;
 import com.bookmark.user.domain.User;
 import com.bookmark.user.domain.UserId;
-import com.bookmark.user.infrastructure.client.IAMClient;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,13 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 public class UserController {
-  private final IAMClient client;
-
   private final UserService service;
 
-  public UserController(IAMClient client, UserService service) {
-    this.client = client;
-
+  public UserController(UserService service) {
     this.service = service;
   }
 
@@ -41,11 +36,7 @@ public class UserController {
     }
 
     try {
-      IAMClient.IdentityResponse identity = client.retrieveIdentity(details.getUsername(), token);
-
-      UserId id = new UserId(identity.id());
-
-      User user = service.query(id);
+      User user = service.currentUser(details.getUsername(), token);
 
       UserResponse response = UserMapper.map(user);
 
@@ -58,14 +49,8 @@ public class UserController {
   @PostMapping("/register")
   public ResponseEntity<UserResponse> post(@RequestBody @Valid UserRegistrationRequest request)
       throws URISyntaxException {
-    IAMClient.RegistrationResponse identity =
-        client.register(request.username(), request.password(), request.roles());
-
-    var id = identity.id().toString();
-
-    var user = new User(id, request.email(), request.roles());
-
-    service.save(user);
+    User user =
+        service.create(request.email(), request.username(), request.password(), request.roles());
 
     String pathname = "/api/users/" + user.getId();
 

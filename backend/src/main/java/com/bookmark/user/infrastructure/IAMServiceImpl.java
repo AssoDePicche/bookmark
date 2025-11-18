@@ -1,35 +1,29 @@
-package com.bookmark.user.infrastructure.client;
+package com.bookmark.user.infrastructure;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.bookmark.user.application.IAMService;
 import java.util.Set;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-@Component
-public class IAMClient {
-  public static record AuthenticationRequest(String username, String password) {}
+record AuthenticationRequest(String username, String password) {}
 
-  public static record AuthenticationResponse(String token) {}
+record RegistrationRequest(String username, String password, Set<String> roles) {}
 
-  public static record IdentityResponse(UUID id, String username, Set<String> roles) {}
-
-  public static record RegistrationRequest(String username, String password, Set<String> roles) {}
-
-  public static record RegistrationResponse(UUID id, String username, Set<String> roles) {}
-
+@Service
+public class IAMServiceImpl implements IAMService {
   private static final MediaType contentType = MediaType.APPLICATION_JSON;
-
-  private static final String URL = "http://localhost:8080/api/iam";
 
   private final RestClient client;
 
-  public IAMClient(RestClient.Builder builder) {
+  public IAMServiceImpl(RestClient.Builder builder, @Value("${client.iam.url}") String URL) {
     this.client = builder.baseUrl(URL).build();
   }
 
+  @Override
   public AuthenticationResponse authenticate(String username, String password) {
     return client.post()
         .uri("/authenticate")
@@ -39,6 +33,7 @@ public class IAMClient {
         .body(AuthenticationResponse.class);
   }
 
+  @Override
   public RegistrationResponse register(String username, String password, Set<String> roles) {
     return client.post()
         .uri("/register")
@@ -48,6 +43,7 @@ public class IAMClient {
         .body(RegistrationResponse.class);
   }
 
+  @Override
   public IdentityResponse retrieveIdentity(String username, String token) {
     return client.get()
         .uri("/{username}", username)
