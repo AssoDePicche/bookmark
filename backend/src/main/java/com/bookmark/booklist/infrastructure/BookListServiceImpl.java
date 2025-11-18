@@ -12,7 +12,9 @@ import com.bookmark.common.domain.Pagination;
 import com.bookmark.common.domain.exception.DuplicateEntryException;
 import com.bookmark.common.domain.exception.NotFoundException;
 import com.bookmark.user.domain.UserId;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookListServiceImpl implements BookListService {
   private final BookListEntryRepository bookListEntryRepository;
 

@@ -15,5 +15,5 @@ public interface BookListRepository {
 
   Paged<BookList> findByUser(UserId user, Pagination pagination);
 
-  BookList save(BookList list);
+  BookList save(BookList bookList);
 }

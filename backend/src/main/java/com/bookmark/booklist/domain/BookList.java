@@ -71,8 +71,12 @@ public class BookList {
   }
 
   public void addEntry(BookId book, String notes, boolean containSpoilers) {
-    BookListEntry entry = new BookListEntry(book, notes, containSpoilers);
+    BookListEntry entry = new BookListEntry(this, book, notes, containSpoilers);
 
+    entries.add(entry);
+  }
+
+  public void addEntry(BookListEntry entry) {
     entries.add(entry);
   }
 }
