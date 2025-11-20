@@ -11,5 +11,7 @@ public interface ReviewService {
 
   AverageRating queryAverageRatingByBook(String bookId);
 
+  Paged<Review> queryBookReviews(String bookId, Pagination pagination);
+
   Paged<Review> queryUserReviews(String userId, Pagination pagination);
 }

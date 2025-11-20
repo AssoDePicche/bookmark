@@ -17,8 +17,8 @@ public class Review {
 
   private LocalDateTime dateAdded;
 
-  public Review(UserId user, BookId book, int rating, String text) {
-    this(new ReviewId(), user, book, rating, text, LocalDateTime.now());
+  public Review(ReviewId id, UserId user, BookId book, int rating, String text) {
+    this(id, user, book, rating, text, LocalDateTime.now());
   }
 
   public Review(
