@@ -30,9 +30,23 @@ services:
     volumes:
       - ./persistence:/var/lib/mysql
       - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+  iam-service:
+    build: ./iam-service
+    container_name: iam-service
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env.production
+    networks:
+      - application
+    ports:
+      - "8081:8081"
   service-registry:
     build: ./service-registry
     container_name: service-registry
+    env_file:
+      - .env.production
     networks:
       - application
     ports:
