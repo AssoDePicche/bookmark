@@ -40,7 +40,7 @@ public class BookListServiceImpl implements BookListService {
   }
 
   @Override
-  public BookList createBookList(String user, String title, String description) {
+  public BookList create(String user, String title, String description) {
     UserId userId = new UserId(user);
 
     BookList bookList = new BookList(userId, title, description);

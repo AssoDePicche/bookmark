@@ -58,8 +58,7 @@ public class BookListController {
   @PostMapping
   public ResponseEntity<BookListResponse> post(@RequestBody @Valid BookListRequest request)
       throws URISyntaxException {
-    BookList bookList =
-        service.createBookList(request.user(), request.title(), request.description());
+    BookList bookList = service.create(request.user(), request.title(), request.description());
 
     String pathname = "/api/lists" + bookList.getId();
 

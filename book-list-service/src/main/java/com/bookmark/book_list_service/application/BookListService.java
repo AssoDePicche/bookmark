@@ -10,7 +10,7 @@ public interface BookListService {
   BookListEntry addBookToBookList(
       String bookListId, String bookId, String notes, boolean containSpoilers);
 
-  BookList createBookList(String user, String title, String description);
+  BookList create(String user, String title, String description);
 
   Paged<BookListEntry> query(String bookListId, Pagination pagination);
 

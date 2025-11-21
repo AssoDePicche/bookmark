@@ -1,4 +1,4 @@
-package com.bookmark.booklist.domain;
+package com.bookmark.book_list_service.domain;
 
 public enum BookListVisibility {
   FRIENDS,

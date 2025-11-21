@@ -1,12 +1,8 @@
-package com.bookmark.domain;
+package com.bookmark.book_list_service.domain;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.bookmark.booklist.domain.BookList;
-import com.bookmark.booklist.domain.BookListVisibility;
-import com.bookmark.booklist.domain.Notes;
-import com.bookmark.user.domain.UserId;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 
@@ -22,13 +18,13 @@ public class BookListTest {
 
   @Test
   public void bookListShouldBePrivateByDefault() {
-    UserId user = new UserId();
+    UserId book_list_service = new UserId();
 
     String title = faker.lorem().sentence();
 
     String description = faker.lorem().sentence();
 
-    BookList list = new BookList(user, title, description);
+    BookList list = new BookList(book_list_service, title, description);
 
     assertTrue(list.getVisibility() == BookListVisibility.PRIVATE);
   }
