@@ -1,4 +1,4 @@
-package com.bookmark.catalog.application;
+package com.bookmark.catalog_service.application;
 
 import java.util.List;
 

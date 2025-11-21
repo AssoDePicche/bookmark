@@ -1,7 +1,7 @@
-package com.bookmark.catalog.infrastructure.persistence;
+package com.bookmark.catalog_service.infrastructure.persistence;
 
-import com.bookmark.catalog.domain.Book;
-import com.bookmark.catalog.domain.BookId;
+import com.bookmark.catalog_service.domain.Book;
+import com.bookmark.catalog_service.domain.BookId;
 
 public class JpaBookEntityMapper {
   public static Book map(JpaBookEntity book) {

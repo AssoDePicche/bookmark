@@ -1,4 +1,4 @@
-package com.bookmark.catalog.interfaces;
+package com.bookmark.catalog_service.interfaces;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

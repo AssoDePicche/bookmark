@@ -1,13 +1,13 @@
-package com.bookmark.catalog.infrastructure;
+package com.bookmark.catalog_service.infrastructure;
 
-import com.bookmark.catalog.application.BookService;
-import com.bookmark.catalog.domain.Book;
-import com.bookmark.catalog.domain.BookRepository;
-import com.bookmark.catalog.domain.Title;
-import com.bookmark.common.domain.Paged;
-import com.bookmark.common.domain.Pagination;
-import com.bookmark.common.domain.exception.DuplicateEntryException;
-import com.bookmark.common.domain.exception.NotFoundException;
+import com.bookmark.catalog_service.application.BookService;
+import com.bookmark.catalog_service.domain.Book;
+import com.bookmark.catalog_service.domain.BookRepository;
+import com.bookmark.catalog_service.domain.Paged;
+import com.bookmark.catalog_service.domain.Pagination;
+import com.bookmark.catalog_service.domain.Title;
+import com.bookmark.catalog_service.domain.exception.DuplicateEntryException;
+import com.bookmark.catalog_service.domain.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service

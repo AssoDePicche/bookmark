@@ -1,9 +1,9 @@
-package com.bookmark.interfaces.controllers;
+package com.bookmark.catalog_service.interfaces.controllers;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.bookmark.catalog.interfaces.BookRequest;
+import com.bookmark.catalog_service.interfaces.BookRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.bookmark.catalog.infrastructure;
+package com.bookmark.catalog_service.infrastructure;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

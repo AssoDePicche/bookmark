@@ -1,10 +1,10 @@
-package com.bookmark.catalog.interfaces;
+package com.bookmark.catalog_service.interfaces;
 
-import com.bookmark.catalog.application.CatalogService;
-import com.bookmark.catalog.domain.Book;
-import com.bookmark.common.domain.Paged;
-import com.bookmark.common.domain.Pagination;
-import com.bookmark.common.infrastructure.mapper.PageMapper;
+import com.bookmark.catalog_service.application.CatalogService;
+import com.bookmark.catalog_service.domain.Book;
+import com.bookmark.catalog_service.domain.Paged;
+import com.bookmark.catalog_service.domain.Pagination;
+import com.bookmark.catalog_service.infrastructure.mapper.PageMapper;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;

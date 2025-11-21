@@ -1,4 +1,4 @@
-package com.bookmark.catalog.domain;
+package com.bookmark.catalog_service.domain;
 
 import java.util.UUID;
 

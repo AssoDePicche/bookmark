@@ -1,6 +1,6 @@
-package com.bookmark.catalog.application;
+package com.bookmark.catalog_service.application;
 
-import com.bookmark.catalog.domain.Book;
+import com.bookmark.catalog_service.domain.Book;
 import com.bookmark.common.domain.Paged;
 import com.bookmark.common.domain.Pagination;
 

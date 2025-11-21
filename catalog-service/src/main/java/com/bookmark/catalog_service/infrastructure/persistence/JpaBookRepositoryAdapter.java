@@ -1,11 +1,11 @@
-package com.bookmark.catalog.infrastructure.persistence;
+package com.bookmark.catalog_service.infrastructure.persistence;
 
-import com.bookmark.catalog.domain.Book;
-import com.bookmark.catalog.domain.BookRepository;
-import com.bookmark.catalog.domain.Title;
-import com.bookmark.common.domain.Paged;
-import com.bookmark.common.domain.Pagination;
-import com.bookmark.common.infrastructure.mapper.PageMapper;
+import com.bookmark.catalog_service.domain.Book;
+import com.bookmark.catalog_service.domain.BookRepository;
+import com.bookmark.catalog_service.domain.Paged;
+import com.bookmark.catalog_service.domain.Pagination;
+import com.bookmark.catalog_service.domain.Title;
+import com.bookmark.catalog_service.infrastructure.mapper.PageMapper;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

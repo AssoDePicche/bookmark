@@ -1,7 +1,5 @@
-package com.bookmark.catalog.domain;
+package com.bookmark.catalog_service.domain;
 
-import com.bookmark.common.domain.Paged;
-import com.bookmark.common.domain.Pagination;
 import java.util.Optional;
 
 public interface BookRepository {

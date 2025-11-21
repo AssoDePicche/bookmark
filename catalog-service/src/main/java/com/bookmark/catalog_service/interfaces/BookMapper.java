@@ -1,12 +1,10 @@
-package com.bookmark.catalog.interfaces;
+package com.bookmark.catalog_service.interfaces;
 
-import com.bookmark.catalog.domain.Book;
-import com.bookmark.common.domain.Paged;
-import com.bookmark.common.infrastructure.mapper.PageMapper;
+import com.bookmark.catalog_service.domain.Book;
+import com.bookmark.catalog_service.domain.Paged;
+import com.bookmark.catalog_service.infrastructure.mapper.PageMapper;
 import java.time.format.DateTimeFormatter;
-import org.springframework.stereotype.Component;
 
-@Component
 public class BookMapper {
   public static Book map(BookRequest request) {
     return new Book(request.isbn(), request.title(), request.description(), request.genre(),

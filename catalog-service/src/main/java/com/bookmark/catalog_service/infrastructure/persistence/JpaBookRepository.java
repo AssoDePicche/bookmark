@@ -1,4 +1,4 @@
-package com.bookmark.catalog.infrastructure.persistence;
+package com.bookmark.catalog_service.infrastructure.persistence;
 
 import java.util.Optional;
 import java.util.UUID;
