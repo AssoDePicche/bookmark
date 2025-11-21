@@ -1,7 +1,7 @@
 services:
-  backend:
-    build: ./backend
-    container_name: backend
+  book-list-service:
+    build: ./book-list-service
+    container_name: book-list-service
     depends_on:
       database:
         condition: service_healthy
@@ -10,7 +10,19 @@ services:
     networks:
       - application
     ports:
-      - "8080:8080"
+      - "8083:8083"
+  catalog-service:
+    build: ./catalog-service
+    container_name: catalog-service
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env.production
+    networks:
+      - application
+    ports:
+      - "8085:8085"
   database:
     command: --require_secure_transport=OFF
     container_name: database
@@ -42,6 +54,15 @@ services:
       - application
     ports:
       - "8081:8081"
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    env_file:
+      - .env.production
+    networks:
+      - application
+    ports:
+      - "8084:8084"
   review-service:
     build: ./review-service
     container_name: review-service
@@ -63,6 +84,15 @@ services:
       - application
     ports:
       - "8761:8761"
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    env_file:
+      - .env.production
+    networks:
+      - application
+    ports:
+      - "8086:8086"
 networks:
   application:
     driver: bridge
