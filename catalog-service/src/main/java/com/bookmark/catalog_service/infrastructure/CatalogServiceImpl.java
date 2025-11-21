@@ -1,6 +1,6 @@
 package com.bookmark.catalog_service.infrastructure;
 
-import com.bookmark.catalog_service.application.BookService;
+import com.bookmark.catalog_service.application.CatalogService;
 import com.bookmark.catalog_service.domain.Book;
 import com.bookmark.catalog_service.domain.BookRepository;
 import com.bookmark.catalog_service.domain.Paged;
@@ -11,7 +11,7 @@ import com.bookmark.catalog_service.domain.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CatalogServiceImpl implements BookService {
+public class CatalogServiceImpl implements CatalogService {
   private final BookRepository repository;
 
   public CatalogServiceImpl(BookRepository repository) {
