@@ -1,6 +1,6 @@
 package com.bookmark.catalog.interfaces;
 
-import com.bookmark.catalog.application.BookService;
+import com.bookmark.catalog.application.CatalogService;
 import com.bookmark.catalog.domain.Book;
 import com.bookmark.common.domain.Paged;
 import com.bookmark.common.domain.Pagination;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/books")
 @RestController
 @Validated
-public class BookController {
-  private final BookService service;
+public class CatalogController {
+  private final CatalogService service;
 
-  public BookController(BookService service) {
+  public CatalogController(CatalogService service) {
     this.service = service;
   }
 

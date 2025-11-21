@@ -11,10 +11,10 @@ import com.bookmark.common.domain.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class CatalogServiceImpl implements BookService {
   private final BookRepository repository;
 
-  public BookServiceImpl(BookRepository repository) {
+  public CatalogServiceImpl(BookRepository repository) {
     this.repository = repository;
   }
 
