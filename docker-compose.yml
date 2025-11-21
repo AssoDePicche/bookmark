@@ -23,6 +23,18 @@ services:
       - application
     ports:
       - "8085:8085"
+  cloud-gateway:
+    build: ./cloud-gateway
+    container_name: cloud-gateway
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env.production
+    networks:
+      - application
+    ports:
+      - "8087:8087"
   database:
     command: --require_secure_transport=OFF
     container_name: database
