@@ -1,6 +1,6 @@
-package com.bookmark.user.infrastructure;
+package com.bookmark.user_service.infrastructure;
 
-import com.bookmark.user.application.IAMService;
+import com.bookmark.user_service.application.IAMService;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.bookmark.user.application;
+package com.bookmark.user_service.application;
 
 import java.util.Set;
 import java.util.UUID;

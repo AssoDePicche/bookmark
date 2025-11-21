@@ -1,8 +1,8 @@
-package com.bookmark.user.infrastructure.persistence;
+package com.bookmark.user_service.infrastructure.persistence;
 
-import com.bookmark.user.domain.User;
-import com.bookmark.user.domain.UserId;
-import com.bookmark.user.domain.UserRole;
+import com.bookmark.user_service.domain.User;
+import com.bookmark.user_service.domain.UserId;
+import com.bookmark.user_service.domain.UserRole;
 import java.util.Set;
 import java.util.stream.Collectors;
 

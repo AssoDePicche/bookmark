@@ -1,4 +1,4 @@
-package com.bookmark.user.domain;
+package com.bookmark.user_service.domain;
 
 import java.util.UUID;
 

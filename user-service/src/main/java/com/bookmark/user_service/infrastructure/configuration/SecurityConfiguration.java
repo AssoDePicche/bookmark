@@ -1,4 +1,4 @@
-package com.bookmark.user.infrastructure.configuration;
+package com.bookmark.user_service.infrastructure.configuration;
 
 import com.bookmark.iam.infrastructure.AuthenticationTokenConverter;
 import org.springframework.context.annotation.Bean;

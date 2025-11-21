@@ -1,4 +1,4 @@
-package com.bookmark.user.infrastructure.persistence;
+package com.bookmark.user_service.infrastructure.persistence;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package com.bookmark.user.interfaces;
+package com.bookmark.user_service.interfaces;
 
 import jakarta.validation.constraints.NotEmpty;
 import java.util.Set;

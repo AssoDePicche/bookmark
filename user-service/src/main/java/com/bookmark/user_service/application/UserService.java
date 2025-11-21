@@ -1,7 +1,7 @@
-package com.bookmark.user.application;
+package com.bookmark.user_service.application;
 
-import com.bookmark.user.domain.User;
-import com.bookmark.user.domain.UserId;
+import com.bookmark.user_service.domain.User;
+import com.bookmark.user_service.domain.UserId;
 import java.util.Set;
 
 public interface UserService {

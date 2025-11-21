@@ -1,9 +1,9 @@
-package com.bookmark.user.infrastructure.persistence;
+package com.bookmark.user_service.infrastructure.persistence;
 
-import com.bookmark.user.domain.Email;
-import com.bookmark.user.domain.User;
-import com.bookmark.user.domain.UserId;
-import com.bookmark.user.domain.UserRepository;
+import com.bookmark.user_service.domain.Email;
+import com.bookmark.user_service.domain.User;
+import com.bookmark.user_service.domain.UserId;
+import com.bookmark.user_service.domain.UserRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 

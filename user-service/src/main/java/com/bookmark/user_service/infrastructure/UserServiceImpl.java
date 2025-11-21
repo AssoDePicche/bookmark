@@ -1,13 +1,13 @@
-package com.bookmark.user.infrastructure;
+package com.bookmark.user_service.infrastructure;
 
-import com.bookmark.common.domain.exception.DuplicateEntryException;
-import com.bookmark.common.domain.exception.NotFoundException;
-import com.bookmark.user.application.IAMService;
-import com.bookmark.user.application.UserService;
-import com.bookmark.user.domain.Email;
-import com.bookmark.user.domain.User;
-import com.bookmark.user.domain.UserId;
-import com.bookmark.user.domain.UserRepository;
+import com.bookmark.user_service.application.IAMService;
+import com.bookmark.user_service.application.UserService;
+import com.bookmark.user_service.domain.Email;
+import com.bookmark.user_service.domain.User;
+import com.bookmark.user_service.domain.UserId;
+import com.bookmark.user_service.domain.UserRepository;
+import com.bookmark.user_service.domain.exception.DuplicateEntryException;
+import com.bookmark.user_service.domain.exception.NotFoundException;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 

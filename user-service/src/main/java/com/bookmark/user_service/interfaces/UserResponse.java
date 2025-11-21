@@ -1,4 +1,4 @@
-package com.bookmark.user.interfaces;
+package com.bookmark.user_service.interfaces;
 
 import java.util.Set;
 
