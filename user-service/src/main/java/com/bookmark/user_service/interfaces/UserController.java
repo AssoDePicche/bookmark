@@ -1,15 +1,13 @@
-package com.bookmark.user.interfaces;
+package com.bookmark.user_service.interfaces;
 
-import com.bookmark.user.application.UserService;
-import com.bookmark.user.domain.User;
-import com.bookmark.user.domain.UserId;
+import com.bookmark.user_service.application.UserService;
+import com.bookmark.user_service.domain.User;
+import com.bookmark.user_service.domain.UserId;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,14 +27,14 @@ public class UserController {
   }
 
   @GetMapping("/me")
-  public ResponseEntity<UserResponse> get(
-      @AuthenticationPrincipal UserDetails details, @RequestHeader("Authorization") String token) {
-    if (null == details) {
+  public ResponseEntity<UserResponse> get(@RequestHeader("Authorization") String token,
+      @RequestHeader("X-User-Username") String username) {
+    if (null == username) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     try {
-      User user = service.currentUser(details.getUsername(), token);
+      User user = service.currentUser(username, token);
 
       UserResponse response = UserMapper.map(user);
 

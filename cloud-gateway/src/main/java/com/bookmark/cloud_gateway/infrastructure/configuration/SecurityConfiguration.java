@@ -1,6 +1,5 @@
-package com.bookmark.user_service.infrastructure.configuration;
+package com.bookmark.cloud_gateway.infrastructure.configuration;
 
-import com.bookmark.iam.infrastructure.AuthenticationTokenConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
