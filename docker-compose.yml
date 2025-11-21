@@ -30,6 +30,13 @@ services:
     volumes:
       - ./persistence:/var/lib/mysql
       - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+  service-registry:
+    build: ./service-registry
+    container_name: service-registry
+    networks:
+      - application
+    ports:
+      - "8761:8761"
 networks:
   application:
     driver: bridge
