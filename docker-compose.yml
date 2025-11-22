@@ -1,113 +1,169 @@
+x-common-database: &common-database
+  image: mysql:latest
+  command: --require_secure_transport=OFF
+  env_file:
+    - .env.mysql
+  networks:
+    - application
+  healthcheck:
+    test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
+    start_period: 30s
+  volumes:
+    - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
+x-common-service: &common-service
+  networks:
+    - application
+
 services:
+  book-list-database:
+    <<: *common-database
+    container_name: book-list-database
+    ports:
+      - "33001:3306"
+    volumes:
+      - book_list_persistence:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
+  catalog-database:
+    <<: *common-database
+    container_name: catalog-database
+    ports:
+      - "33002:3306"
+    volumes:
+      - catalog_persistence:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
+  iam-database:
+    <<: *common-database
+    container_name: iam-database
+    ports:
+      - "33003:3306"
+    volumes:
+      - iam_persistence:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
+  review-database:
+    <<: *common-database
+    container_name: review-database
+    ports:
+      - "33004:3306"
+    volumes:
+      - review_persistence:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
+  user-database:
+    <<: *common-database
+    container_name: user-database
+    ports:
+      - "33005:3306"
+    volumes:
+      - user_persistence:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
   book-list-service:
+    <<: *common-service
     build: ./book-list-service
     container_name: book-list-service
     depends_on:
-      database:
+      book-list-database:
         condition: service_healthy
     env_file:
-      - .env.production
-    networks:
-      - application
+      - .env.book-list
     ports:
       - "8083:8083"
+
   catalog-service:
+    <<: *common-service
     build: ./catalog-service
     container_name: catalog-service
     depends_on:
-      database:
+      catalog-database:
         condition: service_healthy
     env_file:
-      - .env.production
-    networks:
-      - application
+      - .env.catalog
     ports:
       - "8085:8085"
-  cloud-gateway:
-    build: ./cloud-gateway
-    container_name: cloud-gateway
-    depends_on:
-      database:
-        condition: service_healthy
-    env_file:
-      - .env.production
-    networks:
-      - application
-    ports:
-      - "8087:8087"
-  database:
-    command: --require_secure_transport=OFF
-    container_name: database
-    env_file:
-      - .env.production
-    healthcheck:
-      interval: 10s
-      retries: 5
-      start_period: 30s
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
-      timeout: 5s
-    image: mysql:latest
-    networks:
-      - application
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./persistence:/var/lib/mysql
-      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+
   iam-service:
+    <<: *common-service
     build: ./iam-service
     container_name: iam-service
     depends_on:
-      database:
+      iam-database:
         condition: service_healthy
     env_file:
-      - .env.production
-    networks:
-      - application
+      - .env.iam
     ports:
       - "8081:8081"
+
   notification-service:
+    <<: *common-service
     build: ./notification-service
     container_name: notification-service
     env_file:
-      - .env.production
-    networks:
-      - application
+      - .env.notification
     ports:
       - "8084:8084"
+
   review-service:
+    <<: *common-service
     build: ./review-service
     container_name: review-service
     depends_on:
-      database:
+      review-database:
         condition: service_healthy
     env_file:
-      - .env.production
-    networks:
-      - application
+      - .env.review
     ports:
       - "8082:8082"
-  service-registry:
-    build: ./service-registry
-    container_name: service-registry
-    env_file:
-      - .env.production
-    networks:
-      - application
-    ports:
-      - "8761:8761"
+
   user-service:
+    <<: *common-service
     build: ./user-service
     container_name: user-service
+    depends_on:
+      user-database:
+        condition: service_healthy
     env_file:
-      - .env.production
-    networks:
-      - application
+      - .env.user
     ports:
       - "8086:8086"
+
+  service-registry:
+    <<: *common-service
+    build: ./service-registry
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+
+  cloud-gateway:
+    <<: *common-service
+    build: ./cloud-gateway
+    container_name: cloud-gateway
+    depends_on:
+      - book-list-service
+      - catalog-service
+      - iam-service
+      - notification-service
+      - review-service
+      - service-registry
+      - user-service
+    env_file:
+      - .env.eureka
+    ports:
+      - "8087:8087"
+
 networks:
   application:
     driver: bridge
+
 volumes:
-  persistence:
-    driver: local
+  book_list_persistence:
+  catalog_persistence:
+  iam_persistence:
+  review_persistence:
+  user_persistence:
