@@ -1,8 +1,11 @@
 x-common-database: &common-database
   image: mysql:latest
   command: --require_secure_transport=OFF
-  env_file:
-    - .env.mysql
+  environment:
+    - MYSQL_DATABASE=bookmark
+    - MYSQL_PASSWORD=password
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_USER=bookmark
   networks:
     - application
   healthcheck:
@@ -11,8 +14,6 @@ x-common-database: &common-database
     timeout: 5s
     retries: 5
     start_period: 30s
-  volumes:
-    - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
 
 x-common-service: &common-service
   networks:
@@ -71,8 +72,6 @@ services:
     depends_on:
       book-list-database:
         condition: service_healthy
-    env_file:
-      - .env.book-list
     ports:
       - "8083:8083"
 
@@ -83,8 +82,6 @@ services:
     depends_on:
       catalog-database:
         condition: service_healthy
-    env_file:
-      - .env.catalog
     ports:
       - "8085:8085"
 
@@ -95,8 +92,6 @@ services:
     depends_on:
       iam-database:
         condition: service_healthy
-    env_file:
-      - .env.iam
     ports:
       - "8081:8081"
 
@@ -104,8 +99,6 @@ services:
     <<: *common-service
     build: ./notification-service
     container_name: notification-service
-    env_file:
-      - .env.notification
     ports:
       - "8084:8084"
 
@@ -116,8 +109,6 @@ services:
     depends_on:
       review-database:
         condition: service_healthy
-    env_file:
-      - .env.review
     ports:
       - "8082:8082"
 
@@ -128,8 +119,6 @@ services:
     depends_on:
       user-database:
         condition: service_healthy
-    env_file:
-      - .env.user
     ports:
       - "8086:8086"
 
@@ -152,8 +141,6 @@ services:
       - review-service
       - service-registry
       - user-service
-    env_file:
-      - .env.eureka
     ports:
       - "8087:8087"
 

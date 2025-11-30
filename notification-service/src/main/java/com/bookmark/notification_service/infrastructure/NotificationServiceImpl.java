@@ -1,7 +1,7 @@
-package com.bookmark.notification.infrastructure;
+package com.bookmark.notification_service.infrastructure;
 
-import com.bookmark.notification.application.NotificationService;
-import com.bookmark.notification.domain.Notification;
+import com.bookmark.notification_service.application.NotificationService;
+import com.bookmark.notification_service.domain.Notification;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;

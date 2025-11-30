@@ -8,12 +8,10 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class OpenLibraryBookSearch implements BookSearch {
-  private static final String URL = "https://openlibrary.org/";
-
   private final RestClient client;
 
-  public OpenLibraryBookSearch(RestClient.Builder builder) {
-    this.client = builder.baseUrl(URL).build();
+  public OpenLibraryBookSearch(RestClient client) {
+    this.client = client;
   }
 
   @Override

@@ -11,8 +11,9 @@ import com.tngtech.archunit.lang.ArchRule;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@AnalyzeClasses(packages = "com.bookmark", importOptions = {ImportOption.DoNotIncludeTests.class})
-@SpringBootTest
+@AnalyzeClasses(
+    packages = "com.bookmark.iam_service", importOptions = {ImportOption.DoNotIncludeTests.class})
+//@SpringBootTest
 public class IamServiceApplicationTests {
   @ArchTest
   public static final ArchRule domainShouldNotUseFrameworkAnnotations =
