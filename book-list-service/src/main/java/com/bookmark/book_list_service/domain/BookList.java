@@ -1,5 +1,6 @@
 package com.bookmark.book_list_service.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,13 +14,9 @@ public class BookList {
 
   private Description description;
 
-  private List<BookListEntry> entries;
+  private List<BookListEntry> entries = new ArrayList<>();
 
   private BookListVisibility visibility;
-
-  public BookList(UserId user, String title, String description) {
-    this(new BookListId(), user, title, description, BookListVisibility.PRIVATE);
-  }
 
   public BookList(
       BookListId id, UserId user, String title, String description, BookListVisibility visibility) {
@@ -30,8 +27,6 @@ public class BookList {
     this.title = new Title(title);
 
     this.description = new Description(description);
-
-    this.entries = new ArrayList<>();
 
     this.visibility = visibility;
   }
@@ -68,13 +63,19 @@ public class BookList {
     this.visibility = visibility;
   }
 
-  public void addEntry(BookId book, String notes, boolean containSpoilers) {
-    BookListEntry entry = new BookListEntry(this, book, notes, containSpoilers);
+  public BookListEntry addEntry(BookListEntryId id, String book, String notes,
+      boolean containSpoilers, LocalDateTime dateAdded) {
+    var entry =
+        new BookListEntry(id, this, new BookId(book), new Notes(notes, containSpoilers), dateAdded);
 
     entries.add(entry);
+
+    return entry;
   }
 
-  public void addEntry(BookListEntry entry) {
+  public BookListEntry addEntry(BookListEntry entry) {
     entries.add(entry);
+
+    return entry;
   }
 }

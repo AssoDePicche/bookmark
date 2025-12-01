@@ -1,5 +1,7 @@
-package com.bookmark.book_list_service.interfaces;
+package com.bookmark.book_list_service.infrastructure;
 
+import com.bookmark.book_list_service.application.BookListRequest;
+import com.bookmark.book_list_service.application.BookListResponse;
 import com.bookmark.book_list_service.domain.BookList;
 import com.bookmark.book_list_service.domain.Paged;
 import com.bookmark.book_list_service.infrastructure.mapper.PageMapper;

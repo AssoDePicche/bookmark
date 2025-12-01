@@ -1,5 +1,9 @@
 package com.bookmark.book_list_service.interfaces;
 
+import com.bookmark.book_list_service.application.BookListEntryRequest;
+import com.bookmark.book_list_service.application.BookListEntryResponse;
+import com.bookmark.book_list_service.application.BookListRequest;
+import com.bookmark.book_list_service.application.BookListResponse;
 import com.bookmark.book_list_service.application.BookListService;
 import com.bookmark.book_list_service.domain.BookList;
 import com.bookmark.book_list_service.domain.BookListEntry;
@@ -36,9 +40,7 @@ public class BookListController {
       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
     Pagination pagination = PageMapper.map(pageable);
 
-    Paged<BookList> pagedBookLists = service.query(pagination);
-
-    Paged<BookListResponse> response = BookListMapper.map(pagedBookLists);
+    Paged<BookListResponse> response = service.query(pagination);
 
     return ResponseEntity.ok(response);
   }
@@ -48,9 +50,7 @@ public class BookListController {
       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
     Pagination pagination = PageMapper.map(pageable);
 
-    Paged<BookListEntry> bookListEntries = service.query(bookListId, pagination);
-
-    Paged<BookListEntryResponse> response = BookListEntryMapper.map(bookListEntries);
+    Paged<BookListEntryResponse> response = service.query(bookListId, pagination);
 
     return ResponseEntity.ok(response);
   }
@@ -58,13 +58,11 @@ public class BookListController {
   @PostMapping
   public ResponseEntity<BookListResponse> post(@RequestBody @Valid BookListRequest request)
       throws URISyntaxException {
-    BookList bookList = service.create(request.user(), request.title(), request.description());
+    BookListResponse response = service.create(request);
 
-    String pathname = "/api/lists" + bookList.getId();
+    String pathname = "/api/lists/" + response.title();
 
     var uri = new URI(pathname);
-
-    var response = BookListMapper.map(bookList);
 
     return ResponseEntity.created(uri).body(response);
   }
@@ -72,14 +70,11 @@ public class BookListController {
   @PostMapping("/{id}")
   public ResponseEntity<BookListEntryResponse> post(@PathVariable String id,
       @RequestBody @Valid BookListEntryRequest request) throws URISyntaxException {
-    BookListEntry entry = service.addBookToBookList(
-        request.bookListId(), request.bookId(), request.notes(), request.containSpoilers());
+    BookListEntryResponse response = service.addBookListEntry(request);
 
-    String pathname = "/api/lists/" + id + "/" + entry.getId();
+    String pathname = "/api/lists/" + id + "/" + response.book();
 
     var uri = new URI(pathname);
-
-    var response = BookListEntryMapper.map(entry);
 
     return ResponseEntity.created(uri).body(response);
   }

@@ -1,6 +1,7 @@
 package com.bookmark.book_list_service.infrastructure.persistence;
 
 import com.bookmark.book_list_service.domain.BookListEntry;
+import com.bookmark.book_list_service.domain.BookListEntryId;
 import com.bookmark.book_list_service.domain.BookListEntryRepository;
 import com.bookmark.book_list_service.domain.BookListId;
 import com.bookmark.book_list_service.domain.Paged;
@@ -18,7 +19,12 @@ public class JpaBookListEntryRepositoryAdapter implements BookListEntryRepositor
     this.repository = repository;
   }
 
-  // TODO: fix entity mapping in line 28
+  @Override
+  public BookListEntryId nextIdentity() {
+    return new BookListEntryId();
+  }
+
+  // TODO: fix entity mapping in line 34
   @Override
   public Paged<BookListEntry> findByBookList(BookListId id, Pagination pagination) {
     Pageable pageable = PageMapper.map(pagination);

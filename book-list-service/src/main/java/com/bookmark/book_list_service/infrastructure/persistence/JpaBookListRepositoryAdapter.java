@@ -58,6 +58,11 @@ public class JpaBookListRepositoryAdapter implements BookListRepository {
   }
 
   @Override
+  public BookListId nextIdentity() {
+    return new BookListId();
+  }
+
+  @Override
   public BookList save(BookList bookList) {
     JpaBookListEntity entity = JpaBookListEntityMapper.map(bookList);
 

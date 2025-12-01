@@ -1,62 +1,56 @@
 package com.bookmark.book_list_service.infrastructure;
 
+import com.bookmark.book_list_service.application.AddBookListEntryUseCase;
+import com.bookmark.book_list_service.application.BookListEntryRequest;
+import com.bookmark.book_list_service.application.BookListEntryResponse;
+import com.bookmark.book_list_service.application.BookListRequest;
+import com.bookmark.book_list_service.application.BookListResponse;
 import com.bookmark.book_list_service.application.BookListService;
-import com.bookmark.book_list_service.domain.BookId;
-import com.bookmark.book_list_service.domain.BookList;
-import com.bookmark.book_list_service.domain.BookListEntry;
-import com.bookmark.book_list_service.domain.BookListEntryRepository;
-import com.bookmark.book_list_service.domain.BookListId;
-import com.bookmark.book_list_service.domain.BookListRepository;
+import com.bookmark.book_list_service.application.CreateBookListUseCase;
+import com.bookmark.book_list_service.application.GetBookListEntriesUseCase;
+import com.bookmark.book_list_service.application.GetBookListsUseCase;
 import com.bookmark.book_list_service.domain.Paged;
 import com.bookmark.book_list_service.domain.Pagination;
-import com.bookmark.book_list_service.domain.UserId;
-import com.bookmark.book_list_service.domain.exception.DuplicateEntryException;
-import com.bookmark.book_list_service.domain.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookListServiceImpl implements BookListService {
-  private final BookListEntryRepository bookListEntryRepository;
+  private final AddBookListEntryUseCase addEntry;
 
-  private final BookListRepository bookListRepository;
+  private final CreateBookListUseCase createBookList;
 
-  public BookListServiceImpl(
-      BookListEntryRepository bookListEntryRepository, BookListRepository bookListRepository) {
-    this.bookListEntryRepository = bookListEntryRepository;
+  private final GetBookListEntriesUseCase getEntries;
 
-    this.bookListRepository = bookListRepository;
+  private final GetBookListsUseCase getBookLists;
+
+  public BookListServiceImpl(AddBookListEntryUseCase addEntry, CreateBookListUseCase createBookList,
+      GetBookListEntriesUseCase getEntries, GetBookListsUseCase getBookLists) {
+    this.addEntry = addEntry;
+
+    this.createBookList = createBookList;
+
+    this.getEntries = getEntries;
+
+    this.getBookLists = getBookLists;
   }
 
   @Override
-  public BookListEntry addBookToBookList(
-      String bookListId, String bookId, String notes, boolean containSpoilers) {
-    BookList bookList = bookListRepository.findById(new BookListId(bookListId)).orElseThrow(() -> {
-      var message = String.format("Book List Not Found With ID '%s'", bookListId);
-
-      throw new NotFoundException(message);
-    });
-
-    return null;
+  public BookListEntryResponse addBookListEntry(BookListEntryRequest request) {
+    return addEntry.execute(request);
   }
 
   @Override
-  public BookList create(String user, String title, String description) {
-    UserId userId = new UserId(user);
-
-    BookList bookList = new BookList(userId, title, description);
-
-    return null;
+  public BookListResponse create(BookListRequest request) {
+    return createBookList.execute(request);
   }
 
   @Override
-  public Paged<BookListEntry> query(String bookListId, Pagination pagination) {
-    BookListId bookList = new BookListId(bookListId);
-
-    return bookListEntryRepository.findByBookList(bookList, pagination);
+  public Paged<BookListEntryResponse> query(String bookListId, Pagination pagination) {
+    return getEntries.execute(bookListId, pagination);
   }
 
   @Override
-  public Paged<BookList> query(Pagination pagination) {
-    return bookListRepository.findAll(pagination);
+  public Paged<BookListResponse> query(Pagination pagination) {
+    return getBookLists.execute(pagination);
   }
 }

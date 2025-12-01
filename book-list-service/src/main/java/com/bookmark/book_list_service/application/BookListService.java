@@ -1,18 +1,14 @@
 package com.bookmark.book_list_service.application;
 
-import com.bookmark.book_list_service.domain.BookList;
-import com.bookmark.book_list_service.domain.BookListEntry;
-import com.bookmark.book_list_service.domain.BookListId;
 import com.bookmark.book_list_service.domain.Paged;
 import com.bookmark.book_list_service.domain.Pagination;
 
 public interface BookListService {
-  BookListEntry addBookToBookList(
-      String bookListId, String bookId, String notes, boolean containSpoilers);
+  BookListEntryResponse addBookListEntry(BookListEntryRequest request);
 
-  BookList create(String user, String title, String description);
+  BookListResponse create(BookListRequest request);
 
-  Paged<BookListEntry> query(String bookListId, Pagination pagination);
+  Paged<BookListEntryResponse> query(String bookListId, Pagination pagination);
 
-  Paged<BookList> query(Pagination pagination);
+  Paged<BookListResponse> query(Pagination pagination);
 }

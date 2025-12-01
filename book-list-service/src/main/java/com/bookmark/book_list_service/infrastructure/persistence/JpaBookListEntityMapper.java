@@ -14,7 +14,7 @@ public class JpaBookListEntityMapper {
     bookList.getEntries()
         .stream()
         .map(entry -> JpaBookListEntryEntityMapper.map(entry))
-        .forEach(entry -> entity.addEntry(entry));
+        .forEach(entity::addEntry);
 
     return entity;
   }
@@ -31,7 +31,7 @@ public class JpaBookListEntityMapper {
     entity.getEntries()
         .stream()
         .map(entry -> JpaBookListEntryEntityMapper.map(entry, bookList))
-        .forEach(entry -> bookList.addEntry(entry));
+        .forEach(bookList::addEntry);
 
     return bookList;
   }

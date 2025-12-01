@@ -4,8 +4,10 @@ import com.bookmark.book_list_service.domain.BookId;
 import com.bookmark.book_list_service.domain.BookList;
 import com.bookmark.book_list_service.domain.BookListEntry;
 import com.bookmark.book_list_service.domain.BookListEntryId;
+import com.bookmark.book_list_service.domain.Notes;
 
 public class JpaBookListEntryEntityMapper {
+  // TODO: implement mapping
   public static JpaBookListEntryEntity map(BookListEntry entry) {
     return null;
   }
@@ -15,7 +17,8 @@ public class JpaBookListEntryEntityMapper {
 
     var book = new BookId(entity.getBook());
 
-    return new BookListEntry(
-        id, bookList, book, entity.getNotes(), entity.getContainSpoilers(), entity.getDateAdded());
+    var notes = new Notes(entity.getNotes(), entity.getContainSpoilers());
+
+    return new BookListEntry(id, bookList, book, notes, entity.getDateAdded());
   }
 }
