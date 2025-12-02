@@ -1,10 +1,11 @@
 package com.bookmark.review_service.interfaces;
 
+import com.bookmark.review_service.application.ReviewRequest;
+import com.bookmark.review_service.application.ReviewResponse;
 import com.bookmark.review_service.application.ReviewService;
 import com.bookmark.review_service.domain.AverageRating;
 import com.bookmark.review_service.domain.Paged;
 import com.bookmark.review_service.domain.Pagination;
-import com.bookmark.review_service.domain.Review;
 import com.bookmark.review_service.infrastructure.mapper.PageMapper;
 import jakarta.validation.Valid;
 import java.net.URI;
@@ -44,9 +45,7 @@ public class ReviewController {
       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
     Pagination pagination = PageMapper.map(pageable);
 
-    Paged<Review> page = service.queryBookReviews(book, pagination);
-
-    Paged<ReviewResponse> response = ReviewMapper.map(page);
+    Paged<ReviewResponse> response = service.queryBookReviews(book, pagination);
 
     return ResponseEntity.ok(response);
   }
@@ -56,9 +55,7 @@ public class ReviewController {
       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
     Pagination pagination = PageMapper.map(pageable);
 
-    Paged<Review> page = service.queryUserReviews(user, pagination);
-
-    Paged<ReviewResponse> response = ReviewMapper.map(page);
+    Paged<ReviewResponse> response = service.queryUserReviews(user, pagination);
 
     return ResponseEntity.ok(response);
   }
@@ -66,14 +63,11 @@ public class ReviewController {
   @PostMapping
   public ResponseEntity<ReviewResponse> post(@RequestBody @Valid ReviewRequest request)
       throws URISyntaxException {
-    Review review =
-        service.create(request.user(), request.book(), request.rating(), request.text());
+    ReviewResponse response = service.create(request);
 
-    String pathname = "/api/reviews/" + review.getId();
+    String pathname = "/api/reviews/" + response.book();
 
     var uri = new URI(pathname);
-
-    ReviewResponse response = ReviewMapper.map(review);
 
     return ResponseEntity.created(uri).body(response);
   }

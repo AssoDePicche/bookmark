@@ -7,11 +7,11 @@ import com.bookmark.review_service.domain.Rating;
 import com.bookmark.review_service.domain.Review;
 
 public interface ReviewService {
-  Review create(String userId, String bookId, int rating, String text);
+  ReviewResponse create(ReviewRequest request);
 
   AverageRating queryAverageRatingByBook(String bookId);
 
-  Paged<Review> queryBookReviews(String bookId, Pagination pagination);
+  Paged<ReviewResponse> queryBookReviews(String bookId, Pagination pagination);
 
-  Paged<Review> queryUserReviews(String userId, Pagination pagination);
+  Paged<ReviewResponse> queryUserReviews(String userId, Pagination pagination);
 }

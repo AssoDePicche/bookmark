@@ -1,5 +1,11 @@
 package com.bookmark.review_service.infrastructure;
 
+import com.bookmark.review_service.application.AddReviewUseCase;
+import com.bookmark.review_service.application.GetBookAverageRatingUseCase;
+import com.bookmark.review_service.application.GetBookReviewsUseCase;
+import com.bookmark.review_service.application.GetUserReviewsUseCase;
+import com.bookmark.review_service.application.ReviewRequest;
+import com.bookmark.review_service.application.ReviewResponse;
 import com.bookmark.review_service.application.ReviewService;
 import com.bookmark.review_service.domain.AverageRating;
 import com.bookmark.review_service.domain.BookId;
@@ -7,46 +13,48 @@ import com.bookmark.review_service.domain.Paged;
 import com.bookmark.review_service.domain.Pagination;
 import com.bookmark.review_service.domain.Rating;
 import com.bookmark.review_service.domain.Review;
-import com.bookmark.review_service.domain.ReviewRepository;
 import com.bookmark.review_service.domain.UserId;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-  private final ReviewRepository repository;
+  private final AddReviewUseCase addReview;
 
-  public ReviewServiceImpl(ReviewRepository repository) {
-    this.repository = repository;
+  private final GetBookAverageRatingUseCase getBookAverageRating;
+
+  private final GetBookReviewsUseCase getBookReviews;
+
+  private final GetUserReviewsUseCase getUserReviews;
+
+  public ReviewServiceImpl(AddReviewUseCase addReview,
+      GetBookAverageRatingUseCase getBookAverageRating, GetBookReviewsUseCase getBookReviews,
+      GetUserReviewsUseCase getUserReviews) {
+    this.addReview = addReview;
+
+    this.getBookAverageRating = getBookAverageRating;
+
+    this.getBookReviews = getBookReviews;
+
+    this.getUserReviews = getUserReviews;
   }
 
   @Override
-  public Review create(String userId, String bookId, int rating, String text) {
-    var review =
-        new Review(repository.nextIdentity(), new UserId(userId), new BookId(bookId), rating, text);
-
-    repository.save(review);
-
-    return review;
+  public ReviewResponse create(ReviewRequest request) {
+    return addReview.execute(request);
   }
 
   @Override
   public AverageRating queryAverageRatingByBook(String bookId) {
-    List<Review> reviews = repository.findByBook(new BookId(bookId));
-
-    int score = reviews.parallelStream().reduce(
-        0, (accumulator, review) -> accumulator + review.getRating().value(), Integer::sum);
-
-    return new AverageRating(score / reviews.size(), reviews.size());
+    return getBookAverageRating.execute(bookId);
   }
 
   @Override
-  public Paged<Review> queryBookReviews(String bookId, Pagination pagination) {
-    return repository.findByBook(new BookId(bookId), pagination);
+  public Paged<ReviewResponse> queryBookReviews(String bookId, Pagination pagination) {
+    return getBookReviews.execute(bookId, pagination);
   }
 
   @Override
-  public Paged<Review> queryUserReviews(String userId, Pagination pagination) {
-    return repository.findByUser(new UserId(userId), pagination);
+  public Paged<ReviewResponse> queryUserReviews(String userId, Pagination pagination) {
+    return getUserReviews.execute(userId, pagination);
   }
 }

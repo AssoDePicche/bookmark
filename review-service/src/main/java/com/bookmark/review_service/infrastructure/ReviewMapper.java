@@ -1,5 +1,7 @@
-package com.bookmark.review_service.interfaces;
+package com.bookmark.review_service.infrastructure;
 
+import com.bookmark.review_service.application.ReviewRequest;
+import com.bookmark.review_service.application.ReviewResponse;
 import com.bookmark.review_service.domain.Paged;
 import com.bookmark.review_service.domain.Review;
 import com.bookmark.review_service.infrastructure.mapper.PageMapper;
