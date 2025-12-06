@@ -7,7 +7,9 @@ import com.bookmark.review_service.domain.Paged;
 import com.bookmark.review_service.domain.Pagination;
 import com.bookmark.review_service.domain.Review;
 import com.bookmark.review_service.domain.ReviewRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GetBookReviewsUseCaseImpl implements GetBookReviewsUseCase {
   private final ReviewRepository repository;
 

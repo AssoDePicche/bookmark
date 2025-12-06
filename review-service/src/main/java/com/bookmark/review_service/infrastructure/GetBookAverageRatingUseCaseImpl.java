@@ -6,7 +6,9 @@ import com.bookmark.review_service.domain.BookId;
 import com.bookmark.review_service.domain.Review;
 import com.bookmark.review_service.domain.ReviewRepository;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GetBookAverageRatingUseCaseImpl implements GetBookAverageRatingUseCase {
   private final ReviewRepository repository;
 

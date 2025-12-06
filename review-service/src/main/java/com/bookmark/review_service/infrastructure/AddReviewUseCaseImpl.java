@@ -7,7 +7,9 @@ import com.bookmark.review_service.domain.BookId;
 import com.bookmark.review_service.domain.Review;
 import com.bookmark.review_service.domain.ReviewRepository;
 import com.bookmark.review_service.domain.UserId;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AddReviewUseCaseImpl implements AddReviewUseCase {
   private final ReviewRepository repository;
 
