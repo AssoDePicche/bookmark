@@ -8,6 +8,4 @@ public interface BookListEntryRepository {
   Paged<BookListEntry> findByBookList(BookListId id, Pagination pagination);
 
   BookListEntryId nextIdentity();
-
-  BookListEntry save(BookListEntry entry);
 }

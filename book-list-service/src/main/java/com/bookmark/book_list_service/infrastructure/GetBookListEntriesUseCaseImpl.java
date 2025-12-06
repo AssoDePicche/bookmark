@@ -8,7 +8,9 @@ import com.bookmark.book_list_service.domain.BookListEntryRepository;
 import com.bookmark.book_list_service.domain.BookListId;
 import com.bookmark.book_list_service.domain.Paged;
 import com.bookmark.book_list_service.domain.Pagination;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GetBookListEntriesUseCaseImpl implements GetBookListEntriesUseCase {
   private final BookListEntryRepository repository;
 

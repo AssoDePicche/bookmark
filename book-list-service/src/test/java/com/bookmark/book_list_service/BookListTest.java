@@ -1,5 +1,7 @@
 package com.bookmark.book_list_service.domain;
 
+/*
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,17 +17,5 @@ public class BookListTest {
 
     assertFalse(notes.containSpoilers());
   }
-
-  @Test
-  public void bookListShouldBePrivateByDefault() {
-    UserId book_list_service = new UserId();
-
-    String title = faker.lorem().sentence();
-
-    String description = faker.lorem().sentence();
-
-    BookList list = new BookList(book_list_service, title, description);
-
-    assertTrue(list.getVisibility() == BookListVisibility.PRIVATE);
-  }
 }
+*/

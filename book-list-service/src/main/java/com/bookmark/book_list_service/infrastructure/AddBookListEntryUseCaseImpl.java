@@ -11,7 +11,9 @@ import com.bookmark.book_list_service.domain.BookListId;
 import com.bookmark.book_list_service.domain.BookListRepository;
 import com.bookmark.book_list_service.domain.exception.NotFoundException;
 import java.time.LocalDateTime;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AddBookListEntryUseCaseImpl implements AddBookListEntryUseCase {
   private final BookListRepository lists;
 

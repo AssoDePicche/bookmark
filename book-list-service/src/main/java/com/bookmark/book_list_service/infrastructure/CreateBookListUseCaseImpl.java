@@ -7,7 +7,9 @@ import com.bookmark.book_list_service.domain.BookList;
 import com.bookmark.book_list_service.domain.BookListRepository;
 import com.bookmark.book_list_service.domain.BookListVisibility;
 import com.bookmark.book_list_service.domain.UserId;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreateBookListUseCaseImpl implements CreateBookListUseCase {
   private final BookListRepository repository;
 
