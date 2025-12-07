@@ -1,0 +1,39 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://service-registry:8761/eureka/
+  instance:
+    hostname: service-registry
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+server:
+  port: 8087
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        filters:
+          - PrefixPath=/api
+        id: book-list-route
+        predicates:
+          - Path=/book-list/**
+        uri: http://localhost:8083
+  main:
+    banner-mode: off
+  profiles:
+    active: prod
