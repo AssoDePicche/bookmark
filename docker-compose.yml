@@ -88,7 +88,7 @@ services:
 
   book-list-service:
     <<: *common-service
-    build: ./book-list-service
+    build: ./services/book-list
     container_name: book-list-service
     depends_on:
       book-list-database:
@@ -98,7 +98,7 @@ services:
 
   catalog-service:
     <<: *common-service
-    build: ./catalog-service
+    build: ./services/catalog
     container_name: catalog-service
     depends_on:
       catalog-database:
@@ -108,7 +108,7 @@ services:
 
   iam-service:
     <<: *common-service
-    build: ./iam-service
+    build: ./services/iam
     container_name: iam-service
     depends_on:
       iam-database:
@@ -118,14 +118,14 @@ services:
 
   notification-service:
     <<: *common-service
-    build: ./notification-service
+    build: ./services/notification
     container_name: notification-service
     ports:
       - "8084:8084"
 
   review-service:
     <<: *common-service
-    build: ./review-service
+    build: ./services/review
     container_name: review-service
     depends_on:
       review-database:
@@ -135,7 +135,7 @@ services:
 
   user-service:
     <<: *common-service
-    build: ./user-service
+    build: ./services/user
     container_name: user-service
     depends_on:
       user-database:
@@ -145,14 +145,14 @@ services:
 
   service-registry:
     <<: *common-service
-    build: ./service-registry
+    build: ./services/service-registry
     container_name: service-registry
     ports:
       - "8761:8761"
 
   cloud-gateway:
     <<: *common-service
-    build: ./cloud-gateway
+    build: ./services/cloud-gateway
     container_name: cloud-gateway
     depends_on:
       - book-list-service
