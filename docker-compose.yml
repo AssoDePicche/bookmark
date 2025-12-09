@@ -20,6 +20,27 @@ x-common-service: &common-service
     - application
 
 services:
+  keycloack:
+    command: ["start-dev", "--http-port", "7080", "--https-port", "7443"]
+    environment:
+      - KC_HOSTNAME=localhost
+      - KC_HOSTNAME_PORT=7080
+      - KC_HOSTNAME_STRICT_BACKCHANNEL=true
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_HEALTH_ENABLED=true
+      - KC_LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7080/health/ready"]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    image: keycloak/keycloak:latest
+    networks:
+      - application
+    ports:
+      - "7080:7080"
+      - "7443:7443"
   book-list-database:
     <<: *common-database
     container_name: book-list-database
@@ -137,6 +158,7 @@ services:
       - book-list-service
       - catalog-service
       - iam-service
+      - keycloack
       - notification-service
       - review-service
       - service-registry
