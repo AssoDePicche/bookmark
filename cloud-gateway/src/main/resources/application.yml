@@ -29,6 +29,7 @@ spring:
       routes:
         filters:
           - PrefixPath=/api
+          - TokenRelay=
         id: book-list-route
         predicates:
           - Path=/book-list/**
@@ -37,3 +38,14 @@ spring:
     banner-mode: off
   profiles:
     active: prod
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloack:
+            issuer-uri: http://localhost:8080/realm/bookmark
+        registration:
+          keycloack:
+            client-id:
+            client-secret:
+            scope: openid, profile, email
