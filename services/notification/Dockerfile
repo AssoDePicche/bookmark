@@ -4,6 +4,7 @@ COPY pom.xml /app
 RUN mvn -f /app/pom.xml clean package
 
 FROM eclipse-temurin:25-jre-alpine
+RUN apk --no-cache add curl
 COPY --from=build /app/target/*.jar /application.jar
 EXPOSE 8084
 ENTRYPOINT ["java", "-jar", "/application.jar"]

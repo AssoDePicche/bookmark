@@ -3,6 +3,9 @@ package com.bookmark.user_service.infrastructure;
 import com.bookmark.user_service.application.IAMService;
 import java.util.Set;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -18,8 +21,8 @@ public class IAMServiceImpl implements IAMService {
 
   private final RestClient client;
 
-  public IAMServiceImpl(RestClient client) {
-    this.client = client;
+  public IAMServiceImpl(@Value("${client.iam.url}") String URL) {
+    this.client = RestClient.builder().baseUrl(URL).build();
   }
 
   @Override

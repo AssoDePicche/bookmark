@@ -33,14 +33,14 @@ public class ReviewController {
     this.service = service;
   }
 
-  @GetMapping("/{book}/average")
+  @GetMapping("/books/{book}/average")
   public ResponseEntity<AverageRating> getBookAverageRating(String book) {
     AverageRating rating = service.queryAverageRatingByBook(book);
 
     return ResponseEntity.ok(rating);
   }
 
-  @GetMapping("/{book}")
+  @GetMapping("/books/{book}")
   public ResponseEntity<Paged<ReviewResponse>> getBookReviews(@PathVariable String book,
       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
     Pagination pagination = PageMapper.map(pageable);
@@ -50,7 +50,7 @@ public class ReviewController {
     return ResponseEntity.ok(response);
   }
 
-  @GetMapping("/{user}")
+  @GetMapping("/users/{user}")
   public ResponseEntity<Paged<ReviewResponse>> getUserReviews(@PathVariable String user,
       @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
     Pagination pagination = PageMapper.map(pageable);

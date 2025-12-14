@@ -4,8 +4,6 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://service-registry:8761/eureka/
-  instance:
-    hostname: service-registry
 
 management:
   endpoints:
@@ -19,21 +17,40 @@ management:
       enabled: true
 
 server:
-  port: 8087
+  port: 8080
 
 spring:
   application:
     name: cloud-gateway
   cloud:
     gateway:
+      default-filters:
+        - TokenRelay
       routes:
-        filters:
-          - PrefixPath=/api
-          - TokenRelay=
-        id: book-list-route
-        predicates:
-          - Path=/book-list/**
-        uri: http://localhost:8083
+        - id: book-list-route
+          predicates:
+            - Path=/book-list/**
+          uri: lb://BOOK-LIST-SERVICE
+        - id: catalog-route
+          predicates:
+            - Path=/catalog/**
+          uri: lb://CATALOG-SERVICE
+        - id: iam-route
+          predicates:
+            - Path=/iam/**
+          uri: lb://IAM-SERVICE
+        - id: notification-route
+          predicates:
+            - Path=/notification/**
+          uri: lb://NOTIFICATION-SERVICE
+        - id: review-route
+          predicates:
+            - Path=/review/**
+          uri: lb://REVIEW-SERVICE
+        - id: user-route
+          predicates:
+            - Path=/user/**
+          uri: lb://USER-SERVICE
   main:
     banner-mode: off
   profiles:
@@ -42,10 +59,15 @@ spring:
     oauth2:
       client:
         provider:
-          keycloack:
-            issuer-uri: http://localhost:8080/realm/bookmark
+          keycloak:
+            issuer-uri: http://keycloak:7080/realms/bookmark
         registration:
-          keycloack:
-            client-id:
-            client-secret:
+          keycloak:
+            authorization-grant-type: authorization_code
+            client-id: bookmark
+            client-secret: LcIhey4Q3dATDx6birkzJ1Zyz9nzFWjf
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid, profile, email
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:7080/realms/bookmark

@@ -1,7 +1,5 @@
 package com.bookmark.book_list_service.domain;
 
-/*
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,4 +16,3 @@ public class BookListTest {
     assertFalse(notes.containSpoilers());
   }
 }
-*/

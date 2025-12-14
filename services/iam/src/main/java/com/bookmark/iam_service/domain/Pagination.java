@@ -1,5 +1,0 @@
-package com.bookmark.iam_service.domain;
-
-public record Pagination(int page, int size, String sortBy, Sort direction) {
-  public enum Sort { ASC, DESC }
-}

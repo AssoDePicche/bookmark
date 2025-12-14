@@ -20,27 +20,31 @@ x-common-service: &common-service
     - application
 
 services:
-  keycloack:
+  keycloak:
     command: ["start-dev", "--http-port", "7080", "--https-port", "7443"]
+    container_name: keycloak
     environment:
+      - KC_HEALTH_ENABLED=true
       - KC_HOSTNAME=localhost
       - KC_HOSTNAME_PORT=7080
       - KC_HOSTNAME_STRICT_BACKCHANNEL=true
-      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_USERNAME=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_HEALTH_ENABLED=true
       - KC_LOG_LEVEL=info
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:7080/health/ready"]
-      interval: 15s
-      timeout: 2s
-      retries: 15
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/7080 && exit 0 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     image: keycloak/keycloak:latest
     networks:
       - application
     ports:
       - "7080:7080"
       - "7443:7443"
+      - "9000:9000"
   book-list-database:
     <<: *common-database
     container_name: book-list-database
@@ -57,15 +61,6 @@ services:
       - "33002:3306"
     volumes:
       - catalog_persistence:/var/lib/mysql
-      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
-
-  iam-database:
-    <<: *common-database
-    container_name: iam-database
-    ports:
-      - "33003:3306"
-    volumes:
-      - iam_persistence:/var/lib/mysql
       - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
 
   review-database:
@@ -93,6 +88,12 @@ services:
     depends_on:
       book-list-database:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8083/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     ports:
       - "8083:8083"
 
@@ -103,23 +104,25 @@ services:
     depends_on:
       catalog-database:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8085/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     ports:
       - "8085:8085"
-
-  iam-service:
-    <<: *common-service
-    build: ./services/iam
-    container_name: iam-service
-    depends_on:
-      iam-database:
-        condition: service_healthy
-    ports:
-      - "8081:8081"
 
   notification-service:
     <<: *common-service
     build: ./services/notification
     container_name: notification-service
+    healthcheck:
+      test: "curl --fail --silent localhost:8084/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     ports:
       - "8084:8084"
 
@@ -130,6 +133,12 @@ services:
     depends_on:
       review-database:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     ports:
       - "8082:8082"
 
@@ -140,6 +149,12 @@ services:
     depends_on:
       user-database:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8086/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     ports:
       - "8086:8086"
 
@@ -147,6 +162,12 @@ services:
     <<: *common-service
     build: ./services/service-registry
     container_name: service-registry
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
     ports:
       - "8761:8761"
 
@@ -155,16 +176,28 @@ services:
     build: ./services/cloud-gateway
     container_name: cloud-gateway
     depends_on:
-      - book-list-service
-      - catalog-service
-      - iam-service
-      - keycloack
-      - notification-service
-      - review-service
-      - service-registry
-      - user-service
+      keycloak:
+        condition: service_healthy
+      book-list-service:
+        condition: service_healthy
+      catalog-service:
+        condition: service_healthy
+      notification-service:
+        condition: service_healthy
+      review-service:
+        condition: service_healthy
+      service-registry:
+        condition: service_healthy
+      user-service:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
     ports:
-      - "8087:8087"
+      - "8080:8080"
 
 networks:
   application:
@@ -173,6 +206,5 @@ networks:
 volumes:
   book_list_persistence:
   catalog_persistence:
-  iam_persistence:
   review_persistence:
   user_persistence:
